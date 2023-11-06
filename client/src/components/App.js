@@ -8,7 +8,7 @@ function App() {
       .then((beers) => console.log(beers));
     }, []);
 
-    return <h3>Check console for beers...</h3>
+    return <h3>Check console for beers....</h3>
 }
 
 export default App;
