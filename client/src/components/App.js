@@ -1,5 +1,7 @@
-import React, { useEffect, useState } from "react";
-import { Switch, Route } from "react-router-dom";
+// import React, { useEffect, useState } from "react";
+// import { Switch, Route } from "react-router-dom";
+
+import React, { useEffect } from "react";
 
 function App() {
     useEffect(() => {
