@@ -5,6 +5,8 @@ import React, { useEffect, useState } from "react";
 import { Switch, Route } from "react-router-dom";
 import NavBar from './NavBar/NavBar';
 import AllBeers from './AllBeers/AllBeers';
+import HomePage from './HomePage/HomePage'
+import styles from './App.module.css'
 
 function App() {
 
@@ -18,11 +20,14 @@ function App() {
 
   // return <h3>Check console for beers....</h3>
   return (
-    <div>
+    <div className={styles} >
       <NavBar />
       <Switch>
+        <Route exact path='/'>
+          <HomePage />
+        </Route>
         <Route exact path='/beers'>
-          <AllBeers beers={beers}/>
+          <AllBeers beers={beers} />
         </Route>
       </Switch>
     </div>
