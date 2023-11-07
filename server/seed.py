@@ -21,6 +21,8 @@ if __name__ == '__main__':
         User.query.delete()
         username = fake.first_name()
 
+        Beer.query.delete()
+
         user = User(
             username=username
         )
@@ -42,10 +44,16 @@ if __name__ == '__main__':
             beer_type="Black Lager",
             brewery="New Belgium"
         )
+        beer4 = Beer(
+            name="Oktoberfest",
+            beer_type="Marzen",
+            brewery="Sam Adams"
+        )
 
         beers.append(beer1)
         beers.append(beer2)
         beers.append(beer3)
+        beers.append(beer4)
 
         db.session.add_all(users)
         db.session.add_all(beers)
