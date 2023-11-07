@@ -15,6 +15,7 @@ from models import User, Beer
 # Views go here!
 # other routes here?
 @app.route('/')
+@app.route('/beers')
 def index(id=0):
     return render_template("index.html")
 
