@@ -19,6 +19,27 @@ from models import User, Beer
 def index(id=0):
     return render_template("index.html")
 
+
+class SignUp(Resource):
+
+    def post(self):
+        request_json_data = request.get_json()
+
+        username = request_json_data.get('username')
+        # password = request_json_data.get('password')
+
+        new_user = User(
+            username=username
+            # password=password
+        )
+
+        db.session.add(new_user)
+        db.session.commit()
+
+        response = make_response(new_user.to_dict(), 201)
+        return response
+
+
 class AllBeers(Resource):
     def get(self):
 
@@ -29,6 +50,7 @@ class AllBeers(Resource):
 
 
 api.add_resource(AllBeers, '/api/beers')
+api.add_resource(SignUp, '/api/signup')
 
 if __name__ == '__main__':
     app.run(port=5555, debug=True)
