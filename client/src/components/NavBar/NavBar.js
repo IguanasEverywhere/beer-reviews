@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+// import React, { useState } from 'react';
+import React from 'react'
 import { NavLink } from 'react-router-dom';
 import styles from './NavBar.module.css'
 
 function NavBar() {
 
-  const [isLoggedIn, setIsLoggedIn] = useState(true);
+  // const [isLoggedIn, setIsLoggedIn] = useState(true);
 
 
   return (
@@ -13,8 +14,11 @@ function NavBar() {
       <NavLink to='/beers'>Beer Reviews</NavLink>
       <NavLink to='/new'>New Review</NavLink>
       <NavLink to='my-beers'>My Beers</NavLink>
-      {isLoggedIn ? <NavLink to='/logout'>Logout</NavLink> :
-        <NavLink to='/login'>Login</NavLink>}
+      {/* {isLoggedIn ? <NavLink to='/logout'>Logout</NavLink> :
+        <NavLink to='/login'>Login</NavLink>} */}
+      <NavLink to='/login'>Login</NavLink>
+      <NavLink to='/logout'>Logout</NavLink>
+
 
     </div>
   )
