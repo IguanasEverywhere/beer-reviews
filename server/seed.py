@@ -24,7 +24,8 @@ if __name__ == '__main__':
         Beer.query.delete()
 
         user = User(
-            username=username
+            username=username,
+            password="mypw"
         )
 
         users.append(user)

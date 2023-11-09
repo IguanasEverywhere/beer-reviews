@@ -13,6 +13,7 @@ function HomePage() {
   const formik = useFormik({
     initialValues: {
       username: "",
+      password: ""
     },
     validationSchema: signUpFormSchema,
     onSubmit: (values) => {
@@ -23,7 +24,8 @@ function HomePage() {
         },
         body: JSON.stringify(values),
       }).then((r) => {
-        console.log(r)
+        console.log(r.status)
+        // if status is 201, do some redirecting here, else print some error message about signing up
       })
     }
   })
@@ -40,10 +42,20 @@ function HomePage() {
     <form onSubmit={formik.handleSubmit}>
       <label htmlFor="username">Username</label>
       <input
-        id="username"
+        // id="username"
         name="username"
         onChange={formik.handleChange}
         value={formik.values.username}>
+      </input>
+
+      <label htmlFor="password">Password</label>
+      <input
+      type="password"
+      name="password"
+      onChange={formik.handleChange}
+      value={formik.values.password}
+      >
+
       </input>
       <p>{formik.errors.username}</p>
 
