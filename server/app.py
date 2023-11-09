@@ -50,25 +50,41 @@ class Login(Resource):
 
         if active_user.authenticate_user(password):
             session['active_user_id'] = active_user.id
+            session['active_user_username'] = active_user.username
             response = make_response(active_user.to_dict(), 200)
         else:
             response = make_response({'Login Error': 'Login Failed'}, 401)
 
         return response
 
+class Logout(Resource):
+    def delete(self):
+        print(session)
+        session['active_user_id'] = None
+        session['active_user_username'] = None
+        print(session)
+        # return something so page redirects?
 
 class AllBeers(Resource):
     def get(self):
 
-        beers = [beer.to_dict() for beer in Beer.query.all()]
-        response = make_response(beers, 200)
-        return response
+        #backwards for now
+        if not session.get('active_user_id'):
+
+            beers = [beer.to_dict() for beer in Beer.query.all()]
+            response = make_response(beers, 200)
+            return response
+        else:
+            response = make_response({"Error": "Not Logged In"}, 401)
+            return response
+
 
 
 
 api.add_resource(AllBeers, '/api/beers')
 api.add_resource(SignUp, '/api/signup')
 api.add_resource(Login, '/api/login')
+api.add_resource(Logout, '/api/logout')
 
 if __name__ == '__main__':
     app.run(port=5555, debug=True)

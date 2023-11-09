@@ -5,8 +5,10 @@ import React, { useEffect, useState } from "react";
 import { Switch, Route } from "react-router-dom";
 import NavBar from './NavBar/NavBar';
 import AllBeers from './AllBeers/AllBeers';
-import HomePage from './HomePage/HomePage'
-import styles from './App.module.css'
+import HomePage from './HomePage/HomePage';
+import Login from './Login/Login';
+import Logout from './Logout/Logout';
+import styles from './App.module.css';
 
 function App() {
 
@@ -14,8 +16,15 @@ function App() {
 
   useEffect(() => {
     fetch("/api/beers")
-      .then((res) => res.json())
+      .then((res) => {
+        if (res.status !== 200) {
+          console.log('not logged in')
+        }
+        else { return res.json() }
+      })
       .then((beersData) => setBeers(beersData));
+    // .then((res) => res.json())
+    // .then((beersData) => setBeers(beersData));
   }, []);
 
   // return <h3>Check console for beers....</h3>
@@ -28,6 +37,12 @@ function App() {
         </Route>
         <Route exact path='/beers'>
           <AllBeers beers={beers} />
+        </Route>
+        <Route exact path='/login'>
+          <Login />
+        </Route>
+        <Route exact path ='/logout'>
+          <Logout />
         </Route>
       </Switch>
     </div>
