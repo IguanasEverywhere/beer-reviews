@@ -13,7 +13,7 @@ from models import User, Beer
 
 
 # Views go here!
-# other routes here?
+# other routes here? Why do we need this? Doesn't seem to be necessary?
 @app.route('/')
 @app.route('/beers')
 def index(id=0):
@@ -67,16 +67,17 @@ class Logout(Resource):
 
 class AllBeers(Resource):
     def get(self):
+        beers = [beer.to_dict() for beer in Beer.query.all()]
+        response = make_response(beers, 200)
+        return response
 
-        #backwards for now
-        if not session.get('active_user_id'):
-
-            beers = [beer.to_dict() for beer in Beer.query.all()]
-            response = make_response(beers, 200)
-            return response
+class NewReview(Resource):
+    def get(self):
+        if session.get('active_user_id'):
+            response = make_response({"LoginOk": "LoggedIn"}, 200)
         else:
             response = make_response({"Error": "Not Logged In"}, 401)
-            return response
+        return response
 
 
 
@@ -85,6 +86,7 @@ api.add_resource(AllBeers, '/api/beers')
 api.add_resource(SignUp, '/api/signup')
 api.add_resource(Login, '/api/login')
 api.add_resource(Logout, '/api/logout')
+api.add_resource(NewReview, '/api/new')
 
 if __name__ == '__main__':
     app.run(port=5555, debug=True)

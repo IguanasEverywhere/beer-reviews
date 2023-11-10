@@ -18,8 +18,6 @@ function NavBar() {
         <NavLink to='/login'>Login</NavLink>} */}
       <NavLink to='/login'>Login</NavLink>
       <NavLink to='/logout'>Logout</NavLink>
-
-
     </div>
   )
 }
