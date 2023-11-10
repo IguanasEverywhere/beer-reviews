@@ -13,9 +13,12 @@ from models import User, Beer
 
 
 # Views go here!
-# other routes here? Why do we need this? Doesn't seem to be necessary?
+# needed so server can serve up each of these resources directly
 @app.route('/')
 @app.route('/beers')
+@app.route('/new')
+@app.route('/login')
+@app.route('/logout')
 def index(id=0):
     return render_template("index.html")
 
@@ -79,6 +82,15 @@ class NewReview(Resource):
             response = make_response({"Error": "Not Logged In"}, 401)
         return response
 
+class CheckLoggedInStatus(Resource):
+    def get(self):
+        if session.get('active_user_id'):
+            #print(session)
+            response = make_response({"ActiveUser": session}, 200)
+        else:
+            response = make_response({"Error": "Not Logged In"}, 401)
+        return response
+
 
 
 
@@ -87,6 +99,7 @@ api.add_resource(SignUp, '/api/signup')
 api.add_resource(Login, '/api/login')
 api.add_resource(Logout, '/api/logout')
 api.add_resource(NewReview, '/api/new')
+api.add_resource(CheckLoggedInStatus, '/api/checkloginstatus')
 
 if __name__ == '__main__':
     app.run(port=5555, debug=True)

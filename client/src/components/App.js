@@ -42,7 +42,6 @@ function App() {
         </Route>
         <Route exact path='/new'>
           <NewReview />
-          {/* {isLoggedIn ? <NewReview /> : <Login />} */}
         </Route>
         <Route exact path='/login'>
           <Login />
