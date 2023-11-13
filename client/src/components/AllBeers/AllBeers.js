@@ -1,6 +1,19 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 
-function AllBeers({ beers }) {
+function AllBeers() {
+
+  const [beers, setBeers] = useState([]);
+
+  useEffect(() => {
+    fetch("/api/beers")
+      .then((res) => {
+        if (res.status !== 200) {
+          console.log('not logged in')
+        }
+        else { return res.json() }
+      })
+      .then((beersData) => setBeers(beersData));
+  }, []);
 
   const beerCards = beers.map(beer => <li key={beer.id}>{beer.name} | {beer.beer_type} | {beer.brewery}</li>)
 
