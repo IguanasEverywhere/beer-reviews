@@ -8,7 +8,7 @@ from faker import Faker
 
 # Local imports
 from app import app
-from models import db, User, Beer, Review
+from models import db, User, Beer
 
 if __name__ == '__main__':
     fake = Faker()
@@ -17,13 +17,11 @@ if __name__ == '__main__':
         # Seed code goes here!
         users = []
         beers = []
-        reviews = []
 
         User.query.delete()
-        Beer.query.delete()
-        Review.query.delete()
-
         username = fake.first_name()
+
+        Beer.query.delete()
 
         user = User(
             username=username,
@@ -58,10 +56,15 @@ if __name__ == '__main__':
         beers.append(beer3)
         beers.append(beer4)
 
+<<<<<<< HEAD
 
         db.session.add_all(users)
         db.session.add_all(beers)
 
+=======
+        db.session.add_all(users)
+        db.session.add_all(beers)
+>>>>>>> parent of 6b00ff3 (Add reviews table and begin mybeers fetching logic)
 
         db.session.commit()
         print("Seeded!")
