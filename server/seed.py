@@ -58,19 +58,28 @@ if __name__ == '__main__':
         beers.append(beer3)
         beers.append(beer4)
 
+
+        db.session.add_all(users)
+        db.session.add_all(beers)
+
+
+        db.session.commit()
+        print("Seeded!")
+
+        first_user_data = User.query.first().to_dict()
+        first_beer_data = Beer.query.first().to_dict()
+        print(first_user_data['id'])
+        print(first_beer_data['id'])
+
         review1 = Review(
             body="Tasty beer!",
             rating = 5,
-            user_id = 1,
-            beer_id = 2
+            user_id = users[0].id,
+            beer_id = beers[0].id
         )
 
         reviews.append(review1)
 
-        db.session.add_all(users)
-        db.session.add_all(beers)
         db.session.add_all(reviews)
-
         db.session.commit()
-        print("Seeded!")
 
