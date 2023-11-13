@@ -8,6 +8,8 @@ from config import db, bcrypt
 class User(db.Model, SerializerMixin):
     __tablename__ = 'users'
 
+    serialize_rules = ('-reviews.user',)
+
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String, unique=True, nullable=False)
     _password_hash = db.Column(db.String)
@@ -28,13 +30,34 @@ class User(db.Model, SerializerMixin):
         return bcrypt.check_password_hash(self._password_hash, entered_password.encode('utf-8'))
         # do we need to encode this again? other resources don't seem to think so
 
+    reviews = db.relationship('Review', back_populates='user')
+
 
 
 class Beer(db.Model, SerializerMixin):
     __tablename__ = 'beers'
+
+    serialize_rules = ('-reviews.beer',)
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String)
     beer_type = db.Column(db.String)
     brewery = db.Column(db.String)
 
+    reviews = db.relationship('Review', back_populates='beer')
+
+
+class Review(db.Model, SerializerMixin):
+    __tablename__ = 'reviews'
+
+    serialize_rules = ('-user.reviews', '-beer.reviews',)
+
+    id = db.Column(db.Integer, primary_key=True)
+    body = db.Column(db.String)
+    rating = db.Column(db.Integer)
+
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    beer_id = db.Column(db.Integer, db.ForeignKey('beers.id'))
+
+    user = db.relationship('User', back_populates='reviews')
+    beer = db.relationship('Beer', back_populates='reviews')

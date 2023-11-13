@@ -9,7 +9,7 @@ from flask_restful import Resource
 # Local imports
 from config import app, db, api
 # Add your model imports
-from models import User, Beer
+from models import User, Beer, Review
 
 
 # Views go here!
@@ -21,6 +21,14 @@ from models import User, Beer
 @app.route('/logout')
 def index(id=0):
     return render_template("index.html")
+
+@app.before_request
+def check_logged_in_status():
+    locked_endpoints = ['/api/new', '/api/my-beers']
+    if request.endpoint in locked_endpoints:
+        if not session.get('active_user_id'):
+            response = make_response({'Error': 'Not Logged In'}, 401)
+            return response
 
 
 class SignUp(Resource):
@@ -91,11 +99,26 @@ class CheckLoggedInStatus(Resource):
             response = make_response({"Error": "Not Logged In"}, 401)
         return response
 
+class MyBeers(Resource):
+    def get(self):
+        if session.get('active_user_id'):
+            current_user_id = session.get('active_user_id')
+
+            reviews_query_results = Review.query.filter(Review.user_id==current_user_id).all()
+
+            my_reviews = [review.to_dict() for review in reviews_query_results]
+
+            response = make_response(my_reviews, 200)
+        else:
+            response = make_response({"Error": "Not Logged in"}, 401)
+        return response
+
 
 
 
 api.add_resource(AllBeers, '/api/beers')
 api.add_resource(SignUp, '/api/signup')
+api.add_resource(MyBeers, '/api/my-beers')
 api.add_resource(Login, '/api/login')
 api.add_resource(Logout, '/api/logout')
 api.add_resource(NewReview, '/api/new')
