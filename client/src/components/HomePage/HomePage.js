@@ -9,6 +9,8 @@ function HomePage() {
   const [isLoggedIn, setIsLoggedIn] = useState(false)
   const [currentUser, setCurrentUser] = useState(null)
 
+
+  // maybe instead of all this, add to before_request, have GET return the sessionData. Similar to newReview page
   useEffect(() => {
     fetch('/api/checkloginstatus')
       .then(r => {
