@@ -147,8 +147,16 @@ class CheckLoggedInStatus(Resource):
             response = make_response({"Error": "Not Logged In"}, 401)
         return response
 
+class SingleBeerReview(Resource):
+    def get(self, id):
+        beer = Beer.query.filter(Beer.id==id).first()
+
+        response = make_response(beer.to_dict(), 200)
+        return response
+
 
 api.add_resource(AllBeers, '/api/beers', endpoint='/api/beers')
+api.add_resource(SingleBeerReview, '/api/beers/<int:id>', endpoint='/api/beers/<int:id>')
 api.add_resource(SignUp, '/api/signup', endpoint='/api/signup')
 api.add_resource(MyBeers, '/api/my-beers', endpoint='/api/my-beers')
 api.add_resource(Login, '/api/login', endpoint='/api/login')

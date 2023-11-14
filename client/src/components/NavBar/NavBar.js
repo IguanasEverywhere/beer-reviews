@@ -12,7 +12,7 @@ function NavBar() {
     <div className={styles.navBar}>
       <NavLink exact to='/'>Home</NavLink>
       <NavLink to='/beers'>Beer Reviews</NavLink>
-      <NavLink to='/new'>New Review</NavLink>
+      <NavLink to='/new'>New Beer</NavLink>
       <NavLink to='my-beers'>My Beers</NavLink>
       {/* {isLoggedIn ? <NavLink to='/logout'>Logout</NavLink> :
         <NavLink to='/login'>Login</NavLink>} */}
