@@ -104,15 +104,33 @@ class NewReview(Resource):
 
     def post(self):
         current_user_id = session.get('active_user_id')
+
+        beer_name = request.get_json()['beerName']
+        beer_type = request.get_json()['beerType']
+        brewery = request.get_json()['brewery']
+
         reviewBody = request.get_json()['reviewBody']
         rating = request.get_json()['rating']
+
+        new_beer = Beer(
+            name=beer_name,
+            beer_type=beer_type,
+            brewery=brewery
+        )
+
+        db.session.add(new_beer)
+        db.session.commit()
+
+        beer_dict = new_beer.to_dict()
+        beer_dict_id = beer_dict['id']
+
 
 
         #hard code beer_id for now
         new_review = Review(
             body=reviewBody,
             rating=rating,
-            beer_id=1,
+            beer_id=beer_dict_id,
             user_id=current_user_id
         )
 

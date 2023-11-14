@@ -3,11 +3,8 @@ import { NavLink } from 'react-router-dom';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 
-function NewReview() {
+function NewBeer() {
 
-  // do a fetch request to NewReview backend route
-  // check if logged in, change loggedIn state based on response
-  // render form or something else depending on loggedIn state
 
   const [isLoggedIn, setIsLoggedIn] = useState(false)
 
@@ -26,12 +23,18 @@ function NewReview() {
 
   //come back to add maxvalue
   const newReviewFormSchema = yup.object().shape({
+    beerName: yup.string().required("Please enter a beer name"),
+    beerType: yup.string().required("Please enter a type of beer"),
+    brewery: yup.string().required("Please enter a brewery"),
     reviewBody: yup.string().required("Please enter your review of this beer!"),
     rating: yup.number().required().positive().integer()
   })
 
   const formik = useFormik({
     initialValues: {
+      beerName: '',
+      beerType: '',
+      brewery: '',
       reviewBody: '',
       rating: '',
     },
@@ -57,11 +60,32 @@ function NewReview() {
       {isLoggedIn ?
         <form onSubmit={formik.handleSubmit}>
           <input
+          name="beerName"
+          onChange={formik.handleChange}
+          value={formik.values.beerName}
+          placeholder="Beer Name">
+          </input>
+
+          <input
+          name="beerType"
+          onChange={formik.handleChange}
+          value={formik.values.beerType}
+          placeholder="Beer Type">
+          </input>
+
+          <input
+          name="brewery"
+          onChange={formik.handleChange}
+          value={formik.values.brewery}
+          placeholder="Brewery">
+          </input>
+
+          <input
             name="reviewBody"
             onChange={formik.handleChange}
             value={formik.values.reviewBody}
-            placeholder="Enter review here..."
-          ></input>
+            placeholder="Enter review here...">
+          </input>
 
           <input
             name="rating"
@@ -79,4 +103,4 @@ function NewReview() {
   )
 }
 
-export default NewReview;
+export default NewBeer;

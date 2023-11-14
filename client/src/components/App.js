@@ -6,7 +6,7 @@ import { Switch, Route } from "react-router-dom";
 import NavBar from './NavBar/NavBar';
 import AllBeers from './AllBeers/AllBeers';
 import HomePage from './HomePage/HomePage';
-import NewReview from './NewReview/NewReview';
+import NewBeer from './NewBeer/NewBeer';
 import MyBeers from './MyBeers/MyBeers';
 import Login from './Login/Login';
 import Logout from './Logout/Logout';
@@ -25,7 +25,7 @@ function App() {
           <AllBeers />
         </Route>
         <Route exact path='/new'>
-          <NewReview />
+          <NewBeer />
         </Route>
         <Route exact path='/my-beers'>
           <MyBeers />
