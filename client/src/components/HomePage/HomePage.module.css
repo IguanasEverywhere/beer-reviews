@@ -1,6 +1,6 @@
 .logoImg {
-  height: 20%;
-  width: 30%;
+  height: 50%;
+  width: 60%;
   border-radius: 100%;
 }
 
@@ -8,5 +8,10 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: 10%;
+  margin: 5%;
+}
+
+.greeting {
+  font-style: italic;
+  margin-bottom: 5%;
 }

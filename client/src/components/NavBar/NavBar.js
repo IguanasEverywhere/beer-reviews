@@ -10,14 +10,15 @@ function NavBar() {
 
   return (
     <div className={styles.navBar}>
-      <NavLink exact to='/'>Home</NavLink>
-      <NavLink to='/beers'>Beer Reviews</NavLink>
-      <NavLink to='/new'>New Beer</NavLink>
-      <NavLink to='/my-beers'>My Beers</NavLink>
+      <p className={styles.navBarLogo}>Brews Reviews</p>
+      <NavLink exact to='/' className={styles.navlinks}>Home</NavLink>
+      <NavLink to='/beers' className={styles.navlinks}>Beer Reviews</NavLink>
+      <NavLink to='/new' className={styles.navlinks}>New Beer</NavLink>
+      <NavLink to='/my-beers' className={styles.navlinks}>My Beers</NavLink>
       {/* {isLoggedIn ? <NavLink to='/logout'>Logout</NavLink> :
         <NavLink to='/login'>Login</NavLink>} */}
-      <NavLink to='/login'>Login</NavLink>
-      <NavLink to='/logout'>Logout</NavLink>
+      <NavLink to='/login' className={styles.navlinks}>Login</NavLink>
+      <NavLink to='/logout' className={styles.navlinks}>Logout</NavLink>
     </div>
   )
 }

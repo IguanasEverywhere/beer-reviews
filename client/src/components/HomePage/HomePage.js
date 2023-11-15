@@ -81,12 +81,12 @@ function HomePage() {
 
           <button type="submit">Sign up</button>
         </form> </div> :
-        <div>
-          <h1>Cheers, {currentUser}!</h1>
+        <div className={styles.landingLayout}>
+          <h1 className={styles.greeting}>Cheers, {currentUser}!</h1>
         <img className={styles.logoImg} src={beerLogoImg} alt='beer-logo-img'></img>
 
 
-        Photo by <a href="https://unsplash.com/@kazuend?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">kazuend</a> on <a href="https://unsplash.com/photos/two-mugs-of-brown-liquids-NmvMhov1sYc?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Unsplash</a></div>}
+        <small>Photo by <a href="https://unsplash.com/@kazuend?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">kazuend</a> on <a href="https://unsplash.com/photos/two-mugs-of-brown-liquids-NmvMhov1sYc?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Unsplash</a></small></div>}
 
 
 

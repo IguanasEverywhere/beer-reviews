@@ -2,4 +2,20 @@
   display: flex;
   justify-content: space-around;
   background-color: #ffe300;
+  padding: 2% 0;
+  align-items: center;
+  box-shadow: 0 0 20px gray;
+}
+
+.navBarLogo {
+  font-size: 2rem;
+  font-weight: 900;
+  color: orange;
+  text-shadow: #000 1px 0 5px;
+}
+
+.navlinks {
+  font-size: 1.25rem;
+  text-decoration: none;
+  font-weight: 500;
 }
