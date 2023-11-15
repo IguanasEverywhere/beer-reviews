@@ -11,37 +11,43 @@ import NewBeer from './NewBeer/NewBeer';
 import MyBeers from './MyBeers/MyBeers';
 import Login from './Login/Login';
 import Logout from './Logout/Logout';
+import MyAccount from './MyAccount/MyAccount';
 import styles from './App.module.css';
 
 function App() {
 
+
   return (
     <div className={styles} >
-      <NavBar />
-      <Switch>
-        <Route exact path='/'>
-          <HomePage />
-        </Route>
-        <Route exact path='/beers'>
-          <AllBeers />
-        </Route>
-        <Route exact path='/beers/:id'>
-          <BeerReviews />
-        </Route>
-        <Route exact path='/new'>
-          <NewBeer />
-        </Route>
-        <Route exact path='/my-beers'>
-          <MyBeers />
-        </Route>
-        <Route exact path='/login'>
-          <Login />
-        </Route>
-        <Route exact path ='/logout'>
-          <Logout />
-        </Route>
-      </Switch>
-    </div>
+          <NavBar />
+          <Switch>
+            <Route exact path='/'>
+              <HomePage />
+            </Route>
+            <Route exact path='/beers'>
+              <AllBeers />
+            </Route>
+            <Route exact path='/beers/:id'>
+              <BeerReviews />
+            </Route>
+            <Route exact path='/new'>
+              <NewBeer />
+            </Route>
+            <Route exact path='/my-beers'>
+              <MyBeers />
+            </Route>
+            <Route exact path='/login'>
+              <Login />
+            </Route>
+            <Route exact path='/logout'>
+              <Logout />
+            </Route>
+            <Route exact path='/my-account'>
+              <MyAccount />
+            </Route>
+          </Switch>
+        </div>
+
   )
 }
 

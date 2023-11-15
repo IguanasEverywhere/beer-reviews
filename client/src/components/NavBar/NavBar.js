@@ -5,20 +5,14 @@ import styles from './NavBar.module.css'
 
 function NavBar() {
 
-  // const [isLoggedIn, setIsLoggedIn] = useState(true);
-
-
   return (
     <div className={styles.navBar}>
       <p className={styles.navBarLogo}>Brews Reviews</p>
       <NavLink exact to='/' className={styles.navlinks}>Home</NavLink>
-      <NavLink to='/beers' className={styles.navlinks}>Beer Reviews</NavLink>
-      <NavLink to='/new' className={styles.navlinks}>New Beer</NavLink>
-      <NavLink to='/my-beers' className={styles.navlinks}>My Beers</NavLink>
-      {/* {isLoggedIn ? <NavLink to='/logout'>Logout</NavLink> :
-        <NavLink to='/login'>Login</NavLink>} */}
-      <NavLink to='/login' className={styles.navlinks}>Login</NavLink>
-      <NavLink to='/logout' className={styles.navlinks}>Logout</NavLink>
+      <NavLink to='/beers' className={styles.navlinks}>Browse Brew Reviews</NavLink>
+      <NavLink to='/my-account' className={styles.navlinks}>My Account</NavLink>
+      {/* <NavLink to='/new' className={styles.navlinks}>New Beer</NavLink>
+      <NavLink to='/my-beers' className={styles.navlinks}>My Beers</NavLink> */}
     </div>
   )
 }
