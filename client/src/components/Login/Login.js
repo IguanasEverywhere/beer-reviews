@@ -1,6 +1,7 @@
 import React from "react";
 import { useFormik } from "formik";
 import * as yup from "yup";
+import styles from './Login.module.css'
 
 
 function Login() {
@@ -30,21 +31,23 @@ function Login() {
   })
 
   return (
-    <div>
-      <form onSubmit={formik.handleSubmit}>
+    <div className={styles.loginLayout}>
+      <form className={styles.loginForm} onSubmit={formik.handleSubmit}>
+        <h3>We're gonna need to see some id...</h3>
+        <small>Enter your username and password</small>
         <input
-        placeholder="Username"
-        id="username"
-        name="username"
-        onChange={formik.handleChange}
-        value={formik.values.username}
+          placeholder="Username"
+          id="username"
+          name="username"
+          onChange={formik.handleChange}
+          value={formik.values.username}
         ></input>
         <input
-        placeholder="password"
-        id="password"
-        name="password"
-        onChange={formik.handleChange}
-        value={formik.values.password}
+          placeholder="password"
+          id="password"
+          name="password"
+          onChange={formik.handleChange}
+          value={formik.values.password}
         ></input>
 
         <button type="submit">Login!</button>
