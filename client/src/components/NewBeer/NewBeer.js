@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { NavLink } from 'react-router-dom';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
+import styles from './NewBeer.module.css'
 
 function NewBeer() {
 
@@ -56,9 +57,10 @@ function NewBeer() {
   //dont forget to handle errors in this form
 
   return (
-    <div>
+    <div className={styles.newBeerLayout}>
       {isLoggedIn ?
-        <form onSubmit={formik.handleSubmit}>
+        <form className={styles.newBeerForm} onSubmit={formik.handleSubmit}>
+          <h3>Have thoughts on a beer that hasn't been reviewed yet? Tell us all about it!</h3>
           <input
           name="beerName"
           onChange={formik.handleChange}
@@ -80,12 +82,12 @@ function NewBeer() {
           placeholder="Brewery">
           </input>
 
-          <input
+          <textarea
             name="reviewBody"
             onChange={formik.handleChange}
             value={formik.values.reviewBody}
             placeholder="Enter review here...">
-          </input>
+          </textarea>
 
           <input
             name="rating"
@@ -95,7 +97,7 @@ function NewBeer() {
 
           </input>
 
-          <button type='submit'>Add your review!</button>
+          <button type='submit'>Add your review for this new brew!</button>
 
 
         </form> : <p>Please <NavLink to='/login'>Login</NavLink> to write a new Beer Review!</p>}
