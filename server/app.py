@@ -124,9 +124,6 @@ class NewReview(Resource):
         beer_dict = new_beer.to_dict()
         beer_dict_id = beer_dict['id']
 
-
-
-        #hard code beer_id for now
         new_review = Review(
             body=reviewBody,
             rating=rating,
@@ -136,6 +133,30 @@ class NewReview(Resource):
 
         db.session.add(new_review)
         db.session.commit()
+
+class addReview(Resource):
+    def post(self):
+        current_user_id = session.get('active_user_id')
+
+        request_data = request.get_json()
+
+        # print(request_data)
+
+        review_body = request_data['reviewBody']
+        rating = request_data['rating']
+        beer_id = request_data['beer_id']
+
+        added_review = Review(
+            body=review_body,
+            rating=rating,
+            beer_id=beer_id,
+            user_id=current_user_id
+        )
+
+        db.session.add(added_review)
+        db.session.commit()
+
+
 
 
 class CheckLoggedInStatus(Resource):
@@ -147,7 +168,7 @@ class CheckLoggedInStatus(Resource):
             response = make_response({"Error": "Not Logged In"}, 401)
         return response
 
-class SingleBeerReview(Resource):
+class SingleBeerReviews(Resource):
     def get(self, id):
         beer = Beer.query.filter(Beer.id==id).first()
 
@@ -156,12 +177,13 @@ class SingleBeerReview(Resource):
 
 
 api.add_resource(AllBeers, '/api/beers', endpoint='/api/beers')
-api.add_resource(SingleBeerReview, '/api/beers/<int:id>', endpoint='/api/beers/<int:id>')
+api.add_resource(SingleBeerReviews, '/api/beers/<int:id>', endpoint='/api/beers/<int:id>')
 api.add_resource(SignUp, '/api/signup', endpoint='/api/signup')
 api.add_resource(MyBeers, '/api/my-beers', endpoint='/api/my-beers')
 api.add_resource(Login, '/api/login', endpoint='/api/login')
 api.add_resource(Logout, '/api/logout', endpoint='/api/logout')
 api.add_resource(NewReview, '/api/new', endpoint='/api/new')
+api.add_resource(addReview, '/api/add-review', endpoint='/api/add-review')
 api.add_resource(CheckLoggedInStatus, '/api/checkloginstatus', endpoint='/api/checkloginstatus')
 
 if __name__ == '__main__':

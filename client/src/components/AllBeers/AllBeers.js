@@ -1,4 +1,5 @@
-import React, {useEffect, useState} from 'react'
+import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 
 function AllBeers() {
 
@@ -15,7 +16,7 @@ function AllBeers() {
       .then((beersData) => setBeers(beersData));
   }, []);
 
-  const beerCards = beers.map(beer => <li key={beer.id}>{beer.name} | {beer.beer_type} | {beer.brewery}</li>)
+  const beerCards = beers.map(beer => <li key={beer.id}><Link to={'/beers/' + beer.id} >{beer.name} | {beer.beer_type} | {beer.brewery}</Link></li>)
 
   return (
     <div>
