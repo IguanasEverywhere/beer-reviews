@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { NavLink } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import styles from './MyAccount.module.css';
 
 function MyAccount() {
 
@@ -44,21 +45,21 @@ function MyAccount() {
       })
   }, [])
 
-  console.log(isLoggedIn)
-
   return (
     <div>
       {isLoggedIn ?
-        <div>
-          <p>Welcome, {currentUser}</p>
-          <NavLink to='/new'>New Beer</NavLink>
-          <NavLink to='/my-beers'>My Beers</NavLink>
-          <NavLink to='/logout'>Logout</NavLink>
+        <div className={styles.accountPageLayout}>
+          <h2>Welcome back, {currentUser}!</h2>
+
+          <p>Want to view, edit, or delete your own brew reviews?</p>
+          <Link to='/my-beers'><button>My Brew Reviews</button></Link>
+          <p>Want to a review a new brew that <Link to='/beers'>no one else yas yet?</Link></p>
+          <Link to='/new'><button>New Beer</button></Link>
+          <p>Time to call it a day?</p>
+          <Link to='/logout'><button>Logout</button></Link>
         </div>
 
-
-
-        : <h1>Click here to login!</h1>}
+        : <h1>Click <Link to='/login'>here</Link> to login!</h1>}
     </div>
   )
 }

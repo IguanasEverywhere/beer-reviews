@@ -97,7 +97,7 @@ function NewBeer() {
 
           </input>
 
-          <button type='submit'>Add your review for this new brew!</button>
+          <button className={styles.submitBtn} type='submit'>Add your review for this new brew!</button>
 
 
         </form> : <p>Please <NavLink to='/login'>Login</NavLink> to write a new Beer Review!</p>}

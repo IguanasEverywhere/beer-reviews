@@ -29,3 +29,13 @@
 .newBeerForm > input, textarea {
   width: 50%;
 }
+
+.submitBtn {
+  background-color: orange;
+  border: 1px solid gray;
+}
+
+.submitBtn:hover {
+  background-color: gray;
+  color:white;
+}
