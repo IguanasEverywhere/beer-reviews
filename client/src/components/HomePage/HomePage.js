@@ -4,32 +4,13 @@ import beerFlightImg from './bohdan-stocek-vt0O0Av96R4-unsplash.jpg';
 import styles from './HomePage.module.css'
 import { useFormik } from 'formik';
 import * as yup from 'yup';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 
 function HomePage() {
 
   const [isLoggedIn, setIsLoggedIn] = useState(false)
   const [currentUser, setCurrentUser] = useState(null)
-
-
-  // maybe instead of all this, add to before_request, have GET return the sessionData. Similar to newReview page
-  // useEffect(() => {
-  //   fetch('/api/checkloginstatus')
-  //     .then(r => {
-  //       if (r.status === 200) {
-  //         setIsLoggedIn(true)
-  //       }
-  //       else {
-  //         setIsLoggedIn(false)
-  //       }
-  //       return r.json()
-  //     }).then(sessionData => {
-  //       if (sessionData.ActiveUser) {
-  //         let currentUserName = (sessionData.ActiveUser.active_user_username)
-  //         setCurrentUser(currentUserName)
-  //       }
-  //     })
-  // }, [])
+  const [signupSuccess, setSignupSuccess] = useState(false)
 
   useEffect(() => {
     fetch('/api/home')
@@ -69,15 +50,21 @@ function HomePage() {
         },
         body: JSON.stringify(values),
       }).then((r) => {
-        console.log(r.status)
-        // if status is 201, do some redirecting here, else print some error message about signing up
+        if (r.status === 201) {
+          setSignupSuccess(true)
+        }
       })
     }
   })
 
+  console.log(signupSuccess)
+
 
   return (
     <div className={styles.landingLayout}>
+
+      {signupSuccess ? <Redirect to='/my-account' />:
+      <>
 
       {!isLoggedIn ?
         <div className={styles.signupLayout}>
@@ -122,10 +109,8 @@ function HomePage() {
           <img className={styles.logoImg} src={beerLogoImg} alt='beer-logo-img'></img>
 
 
-          <small>Photo by <a href="https://unsplash.com/@kazuend?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">kazuend</a> on <a href="https://unsplash.com/photos/two-mugs-of-brown-liquids-NmvMhov1sYc?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Unsplash</a></small></div>}
-
-
-
+          <small>Photo by <a href="https://unsplash.com/@kazuend?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">kazuend</a> on <a href="https://unsplash.com/photos/two-mugs-of-brown-liquids-NmvMhov1sYc?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Unsplash</a></small></div>}</>
+          }
     </div>
   )
 }
