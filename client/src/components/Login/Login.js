@@ -10,8 +10,19 @@ function Login() {
 
   const [isLoggedIn, setIsLoggedIn] = useState(false)
 
+  // useEffect(() => {
+  //   fetch('/api/checkloginstatus')
+  //     .then(r => {
+  //       if (r.status === 200) {
+  //         setIsLoggedIn(true)
+  //       } else {
+  //         setIsLoggedIn(false)
+  //       }
+  //     })
+  // }, [])
+
   useEffect(() => {
-    fetch('/api/checkloginstatus')
+    fetch('/api/login')
       .then(r => {
         if (r.status === 200) {
           setIsLoggedIn(true)
@@ -40,6 +51,7 @@ function Login() {
         },
         body: JSON.stringify(values)
       }).then((r) => {
+        console.log(r)
         if (r.status === 200) {
           setIsLoggedIn(true)
         }
@@ -47,7 +59,6 @@ function Login() {
     }
   })
 
-  // the redirect below works, but there's the flicker while it happens. Better solution?
   return (
     <div>
       {isLoggedIn ? <Redirect to='/' /> :

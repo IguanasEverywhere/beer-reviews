@@ -25,11 +25,17 @@ def index(id=0):
 
 @app.before_request
 def check_logged_in_status():
-    locked_endpoints = ['/api/new', '/api/my-beers']
-    if request.endpoint in locked_endpoints:
+
+    locked_endpoints = ['/api/new', '/api/my-beers', '/api/home', '/api/my-account', '/api/login']
+    if request.endpoint in locked_endpoints and request.method == 'GET':
         if not session.get('active_user_id'):
             response = make_response({'Error': 'Not Logged In'}, 401)
             return response
+
+class Home(Resource):
+    def get(self):
+        response = make_response({"ActiveUser" :  session}, 200)
+        return response
 
 
 class SignUp(Resource):
@@ -52,6 +58,11 @@ class SignUp(Resource):
         return response
 
 class Login(Resource):
+
+    def get(self):
+        response = make_response({"ActiveUser" :  session}, 200)
+        return response
+
     def post(self):
         request_json_data = request.get_json()
 
@@ -83,9 +94,6 @@ class AllBeers(Resource):
         response = make_response(beers, 200)
         return response
 
-# class BeerReviews(Resource):
-#     def get(self, id):
-#         beer_reviews = [review.to_dict() for review in Beer]
 
 class MyBeers(Resource):
     def get(self):
@@ -140,8 +148,6 @@ class addReview(Resource):
 
         request_data = request.get_json()
 
-        # print(request_data)
-
         review_body = request_data['reviewBody']
         rating = request_data['rating']
         beer_id = request_data['beer_id']
@@ -156,23 +162,25 @@ class addReview(Resource):
         db.session.add(added_review)
         db.session.commit()
 
-
-
-
-class CheckLoggedInStatus(Resource):
-    def get(self):
-        if session.get('active_user_id'):
-            #print(session)
-            response = make_response({"ActiveUser": session}, 200)
-        else:
-            response = make_response({"Error": "Not Logged In"}, 401)
-        return response
+# class CheckLoggedInStatus(Resource):
+#     def get(self):
+#         if session.get('active_user_id'):
+#             #print(session)
+#             response = make_response({"ActiveUser": session}, 200)
+#         else:
+#             response = make_response({"Error": "Not Logged In"}, 401)
+#         return response
 
 class SingleBeerReviews(Resource):
     def get(self, id):
         beer = Beer.query.filter(Beer.id==id).first()
 
         response = make_response(beer.to_dict(), 200)
+        return response
+
+class MyAccount(Resource):
+    def get(self):
+        response = make_response({"ActiveUser" :  session}, 200)
         return response
 
 
@@ -184,7 +192,9 @@ api.add_resource(Login, '/api/login', endpoint='/api/login')
 api.add_resource(Logout, '/api/logout', endpoint='/api/logout')
 api.add_resource(NewReview, '/api/new', endpoint='/api/new')
 api.add_resource(addReview, '/api/add-review', endpoint='/api/add-review')
-api.add_resource(CheckLoggedInStatus, '/api/checkloginstatus', endpoint='/api/checkloginstatus')
+# api.add_resource(CheckLoggedInStatus, '/api/checkloginstatus', endpoint='/api/checkloginstatus')
+api.add_resource(Home, '/api/home', endpoint='/api/home')
+api.add_resource(MyAccount, '/api/my-account', endpoint='/api/my-account')
 
 if __name__ == '__main__':
     app.run(port=5555, debug=True)
