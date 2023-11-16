@@ -11,7 +11,6 @@ function MyBeers() {
   useEffect(() => {
     fetch('/api/my-beers')
       .then(r => {
-        console.log(r.status)
         if (r.status === 200) {
           r.json().then((beersData) =>
             setRequestInfo({loggedIn: true, beers: beersData})
@@ -23,9 +22,6 @@ function MyBeers() {
         }
       })
   }, [])
-
-  console.log(requestInfo.beers)
-  console.log(requestInfo.loggedIn)
 
   // will update this with better info later
   const myBeers = requestInfo.beers.map((beer) => <li key={beer.id}>{beer.beer.name} | {beer.beer.beer_type} | {beer.beer.brewery} | {beer.rating} | {beer.body}</li>)

@@ -57,9 +57,6 @@ function HomePage() {
     }
   })
 
-  console.log(signupSuccess)
-
-
   return (
     <div className={styles.landingLayout}>
 
