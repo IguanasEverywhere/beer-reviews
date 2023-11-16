@@ -11,6 +11,7 @@ function HomePage() {
   const [isLoggedIn, setIsLoggedIn] = useState(false)
   const [currentUser, setCurrentUser] = useState(null)
   const [signupSuccess, setSignupSuccess] = useState(false)
+  const [userExistsError, setUserExistsError] = useState(false)
 
   useEffect(() => {
     fetch('/api/home')
@@ -50,7 +51,9 @@ function HomePage() {
         },
         body: JSON.stringify(values),
       }).then((r) => {
-        if (r.status === 201) {
+        if (r.status === 409) {
+          setUserExistsError(true)
+        } else if (r.status === 201) {
           setSignupSuccess(true)
         }
       })
@@ -80,6 +83,7 @@ function HomePage() {
               onChange={formik.handleChange}
               value={formik.values.username}>
             </input>
+            {userExistsError ? <small>Username already exists! Please choose another.</small> : null}
 
             <label htmlFor="password">Password</label>
             <input

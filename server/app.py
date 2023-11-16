@@ -51,11 +51,16 @@ class SignUp(Resource):
             password=password
         )
 
-        db.session.add(new_user)
-        db.session.commit()
+        existing_user = User.query.filter(User.username == username).first()
+        if existing_user:
+            response = make_response({"Error": "Username already exists"}, 409)
+            return response
+        else:
+            db.session.add(new_user)
+            db.session.commit()
 
-        response = make_response(new_user.to_dict(), 201)
-        return response
+            response = make_response(new_user.to_dict(), 201)
+            return response
 
 class Login(Resource):
 
@@ -120,29 +125,35 @@ class NewReview(Resource):
         reviewBody = request.get_json()['reviewBody']
         rating = request.get_json()['rating']
 
-        new_beer = Beer(
-            name=beer_name,
-            beer_type=beer_type,
-            brewery=brewery
-        )
+        existing_beer = Beer.query.filter(Beer.name == beer_name and Beer.brewery == brewery).first()
 
-        db.session.add(new_beer)
-        db.session.commit()
+        if existing_beer:
+            response = make_response({"Error": "Beer already exists"}, 409)
+            return response
+        else:
+            new_beer = Beer(
+                name=beer_name,
+                beer_type=beer_type,
+                brewery=brewery
+            )
 
-        beer_dict = new_beer.to_dict()
-        beer_dict_id = beer_dict['id']
+            db.session.add(new_beer)
+            db.session.commit()
 
-        new_review = Review(
-            body=reviewBody,
-            rating=rating,
-            beer_id=beer_dict_id,
-            user_id=current_user_id
-        )
+            beer_dict = new_beer.to_dict()
+            beer_dict_id = beer_dict['id']
 
-        db.session.add(new_review)
-        db.session.commit()
+            new_review = Review(
+                body=reviewBody,
+                rating=rating,
+                beer_id=beer_dict_id,
+                user_id=current_user_id
+            )
 
-class addReview(Resource):
+            db.session.add(new_review)
+            db.session.commit()
+
+class AddReview(Resource):
     def post(self):
         current_user_id = session.get('active_user_id')
 
@@ -191,7 +202,7 @@ api.add_resource(MyBeers, '/api/my-beers', endpoint='/api/my-beers')
 api.add_resource(Login, '/api/login', endpoint='/api/login')
 api.add_resource(Logout, '/api/logout', endpoint='/api/logout')
 api.add_resource(NewReview, '/api/new', endpoint='/api/new')
-api.add_resource(addReview, '/api/add-review', endpoint='/api/add-review')
+api.add_resource(AddReview, '/api/add-review', endpoint='/api/add-review')
 # api.add_resource(CheckLoggedInStatus, '/api/checkloginstatus', endpoint='/api/checkloginstatus')
 api.add_resource(Home, '/api/home', endpoint='/api/home')
 api.add_resource(MyAccount, '/api/my-account', endpoint='/api/my-account')
