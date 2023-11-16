@@ -8,7 +8,8 @@ import { Redirect } from 'react-router-dom';
 
 function Login() {
 
-  const [isLoggedIn, setIsLoggedIn] = useState(false)
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [badLogin, setBadLogin] = useState(false);
 
   // useEffect(() => {
   //   fetch('/api/checkloginstatus')
@@ -54,6 +55,8 @@ function Login() {
         console.log(r)
         if (r.status === 200) {
           setIsLoggedIn(true)
+        } else {
+          setBadLogin(true)
         }
       })
     }
@@ -66,6 +69,7 @@ function Login() {
           <form className={styles.loginForm} onSubmit={formik.handleSubmit}>
             <h3>We're gonna need to see some id...</h3>
             <small>Enter your username and password</small>
+            {badLogin ? <p className={styles.failedLogin}>Login Failed! Please Try Again</p> : null}
             <input
               placeholder="Username"
               id="username"
