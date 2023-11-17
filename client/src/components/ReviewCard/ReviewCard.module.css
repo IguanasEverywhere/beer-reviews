@@ -3,4 +3,16 @@
   border-radius: 15px;
   background-color: #8a2be270;
   margin: 2%;
+  padding: 2%;
+}
+
+.buttonsArea {
+  margin-top: 2%;
+}
+
+.buttonsArea > * {
+  margin-right: 2%;
+  border-radius: 5px;
+  border: 1px solid black;
+  padding: 1%;
 }

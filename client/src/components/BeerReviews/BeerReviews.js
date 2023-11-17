@@ -65,12 +65,13 @@ function BeerReviews() {
     if (beerReviews.currentUserId) {
       myReview = beerReviews.reviews.filter(review => review.user_id === beerReviews.currentUserId);
 
-      console.log(myReview.length)
-
       myReviewListing = myReview.length > 0 ?
       <ReviewCard
       body={myReview[0].body}
-      username={myReview[0].user.username} /> :
+      username={myReview[0].user.username}
+      rating={myReview[0].rating}
+      canEdit={true}
+      reviewId={myReview[0].id} /> :
       <div>
       <p>Looks like you haven't reviewed this beer yet! Want to post a review? Use this form!</p>
       <form onSubmit={formik.handleSubmit}>
@@ -103,12 +104,12 @@ function BeerReviews() {
 
     otherReviews = beerReviews.reviews.filter(review => review.user_id !== beerReviews.currentUserId);
 
-    console.log(otherReviews)
-
     otherReviewCards = otherReviews.map(review => <ReviewCard
       key={review.id}
       body={review.body}
-      username={review.user.username} />)
+      username={review.user.username}
+      rating={review.rating}
+      canEdit={false} />)
   }
 
 

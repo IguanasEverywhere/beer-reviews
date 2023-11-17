@@ -87,11 +87,8 @@ class Login(Resource):
 
 class Logout(Resource):
     def delete(self):
-        print(session)
         session['active_user_id'] = None
         session['active_user_username'] = None
-        print(session)
-        # return something so page redirects?
 
 class AllBeers(Resource):
     def get(self):
@@ -173,14 +170,18 @@ class AddReview(Resource):
         db.session.add(added_review)
         db.session.commit()
 
-# class CheckLoggedInStatus(Resource):
-#     def get(self):
-#         if session.get('active_user_id'):
-#             #print(session)
-#             response = make_response({"ActiveUser": session}, 200)
-#         else:
-#             response = make_response({"Error": "Not Logged In"}, 401)
-#         return response
+
+
+class DeleteReview(Resource):
+    def delete(self):
+
+        current_user_id = session.get('active_user_id')
+        review_id = request.get_json()['reviewId']
+
+        review_to_delete = Review.query.filter(Review.id == review_id and Review.user_id == current_user_id).first()
+
+        db.session.delete(review_to_delete)
+        db.session.commit()
 
 class SingleBeerReviews(Resource):
     def get(self, id):
@@ -190,6 +191,7 @@ class SingleBeerReviews(Resource):
 
         response = make_response({'beer': beer.to_dict(), 'user': current_user_id}, 200)
         return response
+
 
 class MyAccount(Resource):
     def get(self):
@@ -205,7 +207,7 @@ api.add_resource(Login, '/api/login', endpoint='/api/login')
 api.add_resource(Logout, '/api/logout', endpoint='/api/logout')
 api.add_resource(NewReview, '/api/new', endpoint='/api/new')
 api.add_resource(AddReview, '/api/add-review', endpoint='/api/add-review')
-# api.add_resource(CheckLoggedInStatus, '/api/checkloginstatus', endpoint='/api/checkloginstatus')
+api.add_resource(DeleteReview, '/api/delete-review', endpoint='/api/delete-review')
 api.add_resource(Home, '/api/home', endpoint='/api/home')
 api.add_resource(MyAccount, '/api/my-account', endpoint='/api/my-account')
 
