@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import ReviewCard from '../ReviewCard/ReviewCard';
@@ -22,39 +22,6 @@ function BeerReviews() {
     currentUserId: '',
     retrieved: false
   });
-
-  useEffect(() => {
-    fetch(`/api/beers/${params.id}`)
-      .then(r => r.json())
-      .then(beerData => setBeerReviews(
-        { reviews: beerData.beer.reviews, currentUserId: beerData.user, retrieved: true })
-      )
-  }, [params.id])
-
-
-  // handle if retrieval hasn't completed yet
-  if (beerReviews.retrieved === false) {
-    console.log("Loading...")
-  } else {
-
-    myReview = beerReviews.reviews.filter(review => review.user_id === beerReviews.currentUserId);
-
-
-    myReviewListing = <ReviewCard
-      body={myReview[0].body}
-      username={myReview[0].user.username} />
-
-    otherReviews = beerReviews.reviews.filter(review => review.user_id !== beerReviews.currentUserId);
-
-    console.log(otherReviews)
-
-    otherReviewCards = otherReviews.map(review => <ReviewCard
-      key={review.id}
-      body={review.body}
-      username={review.user.username} />)
-
-  }
-
 
   const formSchema = yup.object().shape({
     reviewBody: yup.string().required("Please enter a review!"),
@@ -79,9 +46,33 @@ function BeerReviews() {
     }
   })
 
-  return (
-    <div>
-      Beer REviews here
+  useEffect(() => {
+    fetch(`/api/beers/${params.id}`)
+      .then(r => r.json())
+      .then(beerData =>
+        setBeerReviews(
+          { reviews: beerData.beer.reviews, currentUserId: beerData.user, retrieved: true }
+        )
+      )
+  }, [params.id])
+
+
+  // handle if retrieval hasn't completed yet
+  if (beerReviews.retrieved === false) {
+    console.log("Loading...")
+  } else {
+
+    if (beerReviews.currentUserId) {
+      myReview = beerReviews.reviews.filter(review => review.user_id === beerReviews.currentUserId);
+
+      console.log(myReview.length)
+
+      myReviewListing = myReview.length > 0 ?
+      <ReviewCard
+      body={myReview[0].body}
+      username={myReview[0].user.username} /> :
+      <div>
+      <p>Looks like you haven't reviewed this beer yet! Want to post a review? Use this form!</p>
       <form onSubmit={formik.handleSubmit}>
         <input
           name="reviewBody"
@@ -100,6 +91,32 @@ function BeerReviews() {
         <button type="submit">Submit Review!</button>
 
       </form>
+      </div>
+
+    } else {
+      myReviewListing = <p><Link to='/login'>Login</Link> to review this beer!</p>
+    }
+
+
+
+
+
+    otherReviews = beerReviews.reviews.filter(review => review.user_id !== beerReviews.currentUserId);
+
+    console.log(otherReviews)
+
+    otherReviewCards = otherReviews.map(review => <ReviewCard
+      key={review.id}
+      body={review.body}
+      username={review.user.username} />)
+  }
+
+
+
+
+  return (
+    <div>
+
       <div className={styles.reviewsBody}>
         <div className={styles.reviewsCol}>
           <h2>Your Review:</h2>
