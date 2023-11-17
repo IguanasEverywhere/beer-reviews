@@ -1,0 +1,8 @@
+.reviewsBody {
+  display: flex;
+  justify-content: space-around;
+}
+
+.reviewsCol {
+  width: 50%;
+}

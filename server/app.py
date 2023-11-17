@@ -184,9 +184,11 @@ class AddReview(Resource):
 
 class SingleBeerReviews(Resource):
     def get(self, id):
+        current_user_id = session.get('active_user_id')
+
         beer = Beer.query.filter(Beer.id==id).first()
 
-        response = make_response(beer.to_dict(), 200)
+        response = make_response({'beer': beer.to_dict(), 'user': current_user_id}, 200)
         return response
 
 class MyAccount(Resource):
