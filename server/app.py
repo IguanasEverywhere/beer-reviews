@@ -183,6 +183,26 @@ class DeleteReview(Resource):
         db.session.delete(review_to_delete)
         db.session.commit()
 
+    def patch(self):
+
+        current_user_id = session.get('active_user_id')
+
+        request_data = request.get_json()
+
+        review_body = request_data['reviewBody']
+        rating = request_data['rating']
+        beer_id = request_data['beer_id']
+
+        review_to_patch = Review.query.filter(Review.user_id == current_user_id and Review.beer_id == beer_id).first()
+
+        review_to_patch.body = review_body
+        review_to_patch.rating = rating
+
+        db.session.commit()
+
+
+
+
 class SingleBeerReviews(Resource):
     def get(self, id):
         current_user_id = session.get('active_user_id')
