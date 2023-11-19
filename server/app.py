@@ -191,9 +191,11 @@ class DeleteReview(Resource):
 
         review_body = request_data['reviewBody']
         rating = request_data['rating']
-        beer_id = request_data['beer_id']
+        review_id = request_data['review_id']
 
-        review_to_patch = Review.query.filter(Review.user_id == current_user_id and Review.beer_id == beer_id).first()
+        review_to_patch = Review.query.filter(Review.id == review_id and Review.user_id == current_user_id).first()
+
+        print(review_to_patch)
 
         review_to_patch.body = review_body
         review_to_patch.rating = rating

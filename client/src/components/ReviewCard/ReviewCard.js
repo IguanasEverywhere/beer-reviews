@@ -3,12 +3,14 @@ import styles from './ReviewCard.module.css';
 import { useParams } from 'react-router-dom';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
+import { useHistory } from 'react-router-dom';
 
 function ReviewCard({ body, username, rating, canEdit, reviewId }) {
 
   const [isEditing, setIsEditing] = useState(false);
 
   const params = useParams();
+  let history = useHistory();
 
   const formSchema = yup.object().shape({
     reviewBody: yup.string().required("Please enter a review!"),
@@ -19,7 +21,8 @@ function ReviewCard({ body, username, rating, canEdit, reviewId }) {
     initialValues: {
       reviewBody: body,
       rating: rating,
-      beer_id: params.id
+      beer_id: params.id,
+      review_id: reviewId
     },
     validationSchema: formSchema,
     onSubmit: (values) => {
@@ -29,7 +32,7 @@ function ReviewCard({ body, username, rating, canEdit, reviewId }) {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify(values)
-      }).then(r => console.log(r))
+      }).then(r => console.log(r)).then(history.go(0))
     }
   })
 
@@ -47,7 +50,10 @@ function ReviewCard({ body, username, rating, canEdit, reviewId }) {
       },
       body: JSON.stringify({ reviewId: reviewId })
 
-    }).then(r => console.log(r))
+    }).then(r => console.log(r)).then(
+      //refresh current reviews page
+      history.go(0)
+      )
   }
 
   function handleEdit() {
