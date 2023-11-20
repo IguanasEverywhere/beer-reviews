@@ -20,7 +20,7 @@ function AllBeers() {
 
   return (
     <div>
-      All beer reviews
+      <h2>Check out all the Brews Reviews:</h2>
       {beerCards}
     </div>
   )

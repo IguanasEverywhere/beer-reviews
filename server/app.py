@@ -51,6 +51,10 @@ class SignUp(Resource):
             password=password
         )
 
+        # this avoids the thrown exception
+        # new_user.password = password
+
+
         existing_user = User.query.filter(User.username == username).first()
         if existing_user:
             response = make_response({"Error": "Username already exists"}, 409)

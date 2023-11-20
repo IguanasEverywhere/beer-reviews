@@ -25,13 +25,14 @@ function MyBeers() {
       })
   }, [])
 
+  console.log(requestInfo)
   // will update this with better info later
-  const myBeers = requestInfo.beers.map((beer) => <li key={beer.id}><Link to={`/beers/${beer.id}`}>{beer.beer.name}</Link> | {beer.beer.beer_type} | {beer.beer.brewery} | {beer.rating} | {beer.body}</li>)
+  const myBeers = requestInfo.beers.map((beer) => <li key={beer.id}><Link to={`/beers/${beer.beer.id}`}>{beer.beer.name}</Link> | {beer.beer.beer_type} | {beer.beer.brewery} | {beer.rating} | {beer.body}</li>)
 
 
   return (
     <div>
-      {requestInfo.loggedIn ? <div className={styles.myBeersList}>{myBeers}</div>: <p>Please <NavLink to='/login'>Login!</NavLink></p>}
+      {requestInfo.loggedIn ? <div className={styles.myBeersList}><h2>Your Brew Reviews:</h2>{myBeers}</div>: <p>Please <NavLink to='/login'>Login!</NavLink></p>}
     </div>
   )
 }
