@@ -59,7 +59,7 @@ function MyAccount() {
           <Link to='/logout'><button className={styles.accountBtn}>Logout</button></Link>
         </div>
 
-        : <h1>Click <Link to='/login'>here</Link> to login!</h1>}
+        : <div className={styles.loginPrompt}><h1>Click <Link to='/login'>here</Link> to login!</h1></div>}
     </div>
   )
 }

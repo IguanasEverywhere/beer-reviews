@@ -20,3 +20,9 @@
 .accountBtn:hover {
   background-color: orange;
 }
+
+.loginPrompt {
+  display: flex;
+  justify-content: center;
+  margin-top: 5%;
+}

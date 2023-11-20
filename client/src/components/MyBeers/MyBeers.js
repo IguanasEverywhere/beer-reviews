@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { NavLink } from 'react-router-dom'
+import { NavLink } from 'react-router-dom';
+import styles from './MyBeers.module.css';
+import {Link} from 'react-router-dom';
 
 function MyBeers() {
 
@@ -24,12 +26,12 @@ function MyBeers() {
   }, [])
 
   // will update this with better info later
-  const myBeers = requestInfo.beers.map((beer) => <li key={beer.id}>{beer.beer.name} | {beer.beer.beer_type} | {beer.beer.brewery} | {beer.rating} | {beer.body}</li>)
+  const myBeers = requestInfo.beers.map((beer) => <li key={beer.id}><Link to={`/beers/${beer.id}`}>{beer.beer.name}</Link> | {beer.beer.beer_type} | {beer.beer.brewery} | {beer.rating} | {beer.body}</li>)
 
 
   return (
     <div>
-      {requestInfo.loggedIn ? myBeers: <p>Please <NavLink to='/login'>Login!</NavLink></p>}
+      {requestInfo.loggedIn ? <div className={styles.myBeersList}>{myBeers}</div>: <p>Please <NavLink to='/login'>Login!</NavLink></p>}
     </div>
   )
 }

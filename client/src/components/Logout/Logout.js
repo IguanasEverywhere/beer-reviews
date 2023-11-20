@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import styles from './Logout.module.css';
 
 function Logout() {
 
@@ -12,7 +13,7 @@ function Logout() {
   })
 
   return (
-    <div>
+    <div className={styles.logoutConfirm}>
       See you next time!
     </div>
   )

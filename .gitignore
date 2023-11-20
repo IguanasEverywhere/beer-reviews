@@ -65,5 +65,5 @@ instance
 .vscode
 package-lock.json
 
-# does this whole file need to be removed first for the below to work?
+# is this causing deployment issue because of SECRET KEY?
 .env
