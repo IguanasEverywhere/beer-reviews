@@ -67,7 +67,7 @@ function NewBeer() {
 
   return (
     <>
-      {successfulSubmission ? <p>Thank you for submitting your new Brew Review!</p> :
+      {successfulSubmission ? <h3>Thank you for submitting your new Brew Review!</h3> :
         <div className={styles.newBeerLayout}>
           {isLoggedIn ?
             <form className={styles.newBeerForm} onSubmit={formik.handleSubmit}>
