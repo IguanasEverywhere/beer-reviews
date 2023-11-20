@@ -20,6 +20,8 @@ from models import User, Beer, Review
 @app.route('/my-beers')
 @app.route('/login')
 @app.route('/logout')
+@app.route('/my-account')
+@app.route('/beers/<int:id>')
 def index(id=0):
     return render_template("index.html")
 
@@ -104,13 +106,14 @@ class AllBeers(Resource):
 class MyBeers(Resource):
     def get(self):
         current_user_id = session.get('active_user_id')
+        print(current_user_id)
         reviews_query_results = Review.query.filter(Review.user_id==current_user_id).all()
         my_reviews = [review.to_dict() for review in reviews_query_results]
         response = make_response(my_reviews, 200)
 
         return response
 
-class NewReview(Resource):
+class NewBeer(Resource):
     def get(self):
         current_user_id = session.get('active_user_id')
         response = make_response({'current_user_id': current_user_id}, 200)
@@ -154,7 +157,60 @@ class NewReview(Resource):
             db.session.add(new_review)
             db.session.commit()
 
-class AddReview(Resource):
+# class AddReview(Resource):
+
+#     def post(self):
+#         current_user_id = session.get('active_user_id')
+
+#         request_data = request.get_json()
+
+#         review_body = request_data['reviewBody']
+#         rating = request_data['rating']
+#         beer_id = request_data['beer_id']
+
+#         added_review = Review(
+#             body=review_body,
+#             rating=rating,
+#             beer_id=beer_id,
+#             user_id=current_user_id
+#         )
+
+#         db.session.add(added_review)
+#         db.session.commit()
+
+
+# class DeleteReview(Resource):
+#     def delete(self):
+
+#         current_user_id = session.get('active_user_id')
+#         review_id = request.get_json()['reviewId']
+
+#         review_to_delete = Review.query.filter(Review.id == review_id and Review.user_id == current_user_id).first()
+
+#         db.session.delete(review_to_delete)
+#         db.session.commit()
+
+#     def patch(self):
+
+#         current_user_id = session.get('active_user_id')
+
+#         request_data = request.get_json()
+
+#         review_body = request_data['reviewBody']
+#         rating = request_data['rating']
+#         review_id = request_data['review_id']
+
+#         review_to_patch = Review.query.filter(Review.id == review_id and Review.user_id == current_user_id).first()
+
+#         print(review_to_patch)
+
+#         review_to_patch.body = review_body
+#         review_to_patch.rating = rating
+
+#         db.session.commit()
+
+
+class AlterReview(Resource):
     def post(self):
         current_user_id = session.get('active_user_id')
 
@@ -174,9 +230,6 @@ class AddReview(Resource):
         db.session.add(added_review)
         db.session.commit()
 
-
-
-class DeleteReview(Resource):
     def delete(self):
 
         current_user_id = session.get('active_user_id')
@@ -207,8 +260,6 @@ class DeleteReview(Resource):
         db.session.commit()
 
 
-
-
 class SingleBeerReviews(Resource):
     def get(self, id):
         current_user_id = session.get('active_user_id')
@@ -231,17 +282,14 @@ api.add_resource(SignUp, '/api/signup', endpoint='/api/signup')
 api.add_resource(MyBeers, '/api/my-beers', endpoint='/api/my-beers')
 api.add_resource(Login, '/api/login', endpoint='/api/login')
 api.add_resource(Logout, '/api/logout', endpoint='/api/logout')
-api.add_resource(NewReview, '/api/new', endpoint='/api/new')
-api.add_resource(AddReview, '/api/add-review', endpoint='/api/add-review')
-api.add_resource(DeleteReview, '/api/delete-review', endpoint='/api/delete-review')
+api.add_resource(NewBeer, '/api/new', endpoint='/api/new')
+# api.add_resource(AddReview, '/api/add-review', endpoint='/api/add-review')
+# api.add_resource(DeleteReview, '/api/delete-review', endpoint='/api/delete-review')
 api.add_resource(Home, '/api/home', endpoint='/api/home')
 api.add_resource(MyAccount, '/api/my-account', endpoint='/api/my-account')
+api.add_resource(AlterReview, '/api/alter-review', endpoint='/api/alter-review')
 
 if __name__ == '__main__':
     app.run(port=5555, debug=True)
 
-
-# This didn't solve the deployment problem
-# if __name__ == '__main__':
-#     app.run()
 

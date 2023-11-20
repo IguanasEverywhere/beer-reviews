@@ -68,6 +68,7 @@ function Login() {
               value={formik.values.username}
             ></input>
             <input
+              type="password"
               placeholder="password"
               id="password"
               name="password"

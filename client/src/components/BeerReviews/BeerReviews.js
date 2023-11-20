@@ -39,7 +39,7 @@ function BeerReviews() {
     validationSchema: formSchema,
     onSubmit: (values) => {
       console.log(values)
-      fetch('/api/add-review', {
+      fetch('/api/alter-review', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

@@ -26,7 +26,7 @@ function ReviewCard({ body, username, rating, canEdit, reviewId }) {
     },
     validationSchema: formSchema,
     onSubmit: (values) => {
-      fetch('/api/delete-review', {
+      fetch('/api/alter-review', {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json'
@@ -43,7 +43,7 @@ function ReviewCard({ body, username, rating, canEdit, reviewId }) {
   }
 
   function handleDelete() {
-    fetch('/api/delete-review', {
+    fetch('/api/alter-review', {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json'
