@@ -84,13 +84,6 @@ function BeerReviews() {
               value={formik.values.reviewBody}
               placeholder="Review...">
             </textarea>
-
-            {/* <input
-              name="rating"
-              onChange={formik.handleChange}
-              value={formik.values.rating}
-              placeholder="Rating">
-            </input> */}
             <select
               name="rating"
               onChange={formik.handleChange}
@@ -111,9 +104,6 @@ function BeerReviews() {
     } else {
       myReviewListing = <p><Link to='/login'>Login</Link> to review this beer!</p>
     }
-
-
-
 
 
     otherReviews = beerReviews.reviews.filter(review => review.user_id !== beerReviews.currentUserId);

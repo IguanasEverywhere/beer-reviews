@@ -19,19 +19,22 @@ if __name__ == '__main__':
         beers = []
         reviews = []
 
-        User.query.delete()
-        username = fake.first_name()
-
-        Beer.query.delete()
-
         Review.query.delete()
+        Beer.query.delete()
+        User.query.delete()
 
-        user = User(
-            username=username,
+        user1 = User(
+            username=fake.first_name(),
             password="mypw"
         )
 
-        users.append(user)
+        user2 = User(
+            username = fake.first_name(),
+            password="anotherpw"
+        )
+
+        users.append(user1)
+        users.append(user2)
 
         beer1 = Beer(
             name="Boston Lager",
@@ -65,12 +68,10 @@ if __name__ == '__main__':
 
 
         db.session.commit()
-        print("Seeded!")
+
 
         first_user_data = User.query.first().to_dict()
         first_beer_data = Beer.query.first().to_dict()
-        print(first_user_data['id'])
-        print(first_beer_data['id'])
 
         review1 = Review(
             body="Tasty beer!",
@@ -79,8 +80,44 @@ if __name__ == '__main__':
             beer_id = beers[0].id
         )
 
+        review2 = Review(
+            body="So-so, I've had better...!",
+            rating = 3,
+            user_id = users[0].id,
+            beer_id = beers[1].id
+        )
+
+        review3 = Review(
+            body="Great year-round choice!",
+            rating = 4,
+            user_id = users[1].id,
+            beer_id = beers[0].id
+        )
+
+        review4 = Review(
+            body="Very drinkable!",
+            rating = 4,
+            user_id = users[1].id,
+            beer_id = beers[2].id
+        )
+
+        review5 = Review(
+            body="Too sweet for me",
+            rating = 2,
+            user_id = users[1].id,
+            beer_id = beers[3].id
+        )
+
+
+
         reviews.append(review1)
+        reviews.append(review2)
+        reviews.append(review3)
+        reviews.append(review4)
+        reviews.append(review5)
 
         db.session.add_all(reviews)
         db.session.commit()
+
+        print("Seeded!")
 

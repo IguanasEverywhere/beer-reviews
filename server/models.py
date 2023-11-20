@@ -30,7 +30,7 @@ class User(db.Model, SerializerMixin):
         return bcrypt.check_password_hash(self._password_hash, entered_password.encode('utf-8'))
         # do we need to encode this again? other resources don't seem to think so
 
-    reviews = db.relationship('Review', back_populates='user')
+    reviews = db.relationship('Review', back_populates='user', cascade='all, delete-orphan')
 
 
 

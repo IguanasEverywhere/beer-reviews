@@ -12,7 +12,6 @@ import MyBeers from './MyBeers/MyBeers';
 import Login from './Login/Login';
 import Logout from './Logout/Logout';
 import MyAccount from './MyAccount/MyAccount';
-import Confirm from './AddEditConfirm/AddEditConfirm';
 import styles from './App.module.css';
 
 function App() {
@@ -45,9 +44,6 @@ function App() {
             </Route>
             <Route exact path='/my-account'>
               <MyAccount />
-            </Route>
-            <Route exact path='/confirm'>
-              <Confirm />
             </Route>
           </Switch>
         </div>
