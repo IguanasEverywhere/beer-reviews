@@ -233,6 +233,9 @@ api.add_resource(DeleteReview, '/api/delete-review', endpoint='/api/delete-revie
 api.add_resource(Home, '/api/home', endpoint='/api/home')
 api.add_resource(MyAccount, '/api/my-account', endpoint='/api/my-account')
 
+# if __name__ == '__main__':
+#     app.run(port=5555, debug=True)
+
 if __name__ == '__main__':
-    app.run(port=5555, debug=True)
+    app.run()
 

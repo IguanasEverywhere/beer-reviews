@@ -11,16 +11,6 @@ function Login() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [badLogin, setBadLogin] = useState(false);
 
-  // useEffect(() => {
-  //   fetch('/api/checkloginstatus')
-  //     .then(r => {
-  //       if (r.status === 200) {
-  //         setIsLoggedIn(true)
-  //       } else {
-  //         setIsLoggedIn(false)
-  //       }
-  //     })
-  // }, [])
 
   useEffect(() => {
     fetch('/api/login')
