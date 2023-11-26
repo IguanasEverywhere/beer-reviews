@@ -33,8 +33,8 @@ function HomePage() {
 
 
   const signUpFormSchema = yup.object().shape({
-    username: yup.string().required("Please enter a username!"),
-    password: yup.string().required("Please create a password!")
+    username: yup.string().required("Please enter a username!").min(3),
+    password: yup.string().required("Please create a password!").matches(/^(?=.*[a-zA-Z])(?=.*[0-9]).*$/, "Password must include at least one number and at least one letter!")
   });
 
   const formik = useFormik({

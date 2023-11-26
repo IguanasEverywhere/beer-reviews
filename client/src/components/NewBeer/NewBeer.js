@@ -30,8 +30,8 @@ function NewBeer() {
     beerName: yup.string().required("Please enter a beer name"),
     beerType: yup.string().required("Please enter a type of beer"),
     brewery: yup.string().required("Please enter a brewery"),
-    reviewBody: yup.string().required("Please enter your review of this beer!"),
-    rating: yup.number().required().positive().integer("Select a number for your review!")
+    reviewBody: yup.string().required("Please enter your review of this beer!").min(10),
+    rating: yup.number().required().positive().integer("Select a number for your review!").min(1).max(5)
   })
 
   const formik = useFormik({

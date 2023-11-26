@@ -25,12 +25,12 @@ if __name__ == '__main__':
 
         user1 = User(
             username=fake.first_name(),
-            password="mypw"
+            password="mypw123"
         )
 
         user2 = User(
             username = fake.first_name(),
-            password="anotherpw"
+            password="anotherpw456"
         )
 
         users.append(user1)
