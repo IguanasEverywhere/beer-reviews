@@ -22,7 +22,8 @@ function BeerReviews() {
   const [beerReviews, setBeerReviews] = useState({
     reviews: [],
     currentUserId: '',
-    retrieved: false
+    retrieved: false,
+    name: ''
   });
 
   const formSchema = yup.object().shape({
@@ -52,10 +53,10 @@ function BeerReviews() {
   useEffect(() => {
     fetch(`/api/beers/${params.id}`)
       .then(r => r.json())
-      .then(beerData =>
+      .then(beerData => {
         setBeerReviews(
-          { reviews: beerData.beer.reviews, currentUserId: beerData.user, retrieved: true }
-        )
+          { reviews: beerData.beer.reviews, currentUserId: beerData.user, retrieved: true, name: beerData.beer.brewery + ' - ' + beerData.beer.name }
+        )}
       )
   }, [params.id])
 
@@ -121,7 +122,7 @@ function BeerReviews() {
 
   return (
     <div>
-
+      <h1>{beerReviews.name}</h1>
       <div className={styles.reviewsBody}>
         <div className={styles.reviewsCol}>
           <h2>Your Review:</h2>
