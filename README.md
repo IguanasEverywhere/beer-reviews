@@ -1,357 +1,173 @@
-# Phase 4 Full-Stack Application Project Template
+# Brews Reviews
 
-## Learning Goals
+## How to Use
 
-- Discuss the basic directory structure of a full-stack Flask/React application.
-- Carry out the first steps in creating your Phase 4 project.
+On the Brews Reviews website, a user can register for an account via unique username and password that they create. Once registered, a user can login and then:
 
----
+- View beers in the database
+- Add a review (both a rating and prose) for a beer in the database
+- View other users' reviews of beers in the database
+- Edit or Delete one of their own reviews
+- Add a new beer + review for a beer that's not yet in the database
+- Logout
 
-## Introduction
-
-Fork and clone this lesson for a template for your full-stack application. Take
-a look at the directory structure before we begin (NOTE: node_modules will be
-generated in a subsequent step):
-
-```console
-$ tree -L 2
-$ # the -L argument limits the depth at which we look into the directory structure
-.
-├── CONTRIBUTING.md
-├── LICENSE.md
-├── Pipfile
-├── README.md
-├── client
-│   ├── README.md
-│   ├── package.json
-│   ├── public
-│   └── src
-└── server
-    ├── app.py
-    ├── config.py
-    ├── models.py
-    └── seed.py
-```
-
-A `migrations` folder will be added to the `server` directory in a later step.
-
-The `client` folder contains a basic React application, while the `server`
-folder contains a basic Flask application. You will adapt both folders to
-implement the code for your project .
-
-NOTE: If you did not previously install `tree` in your environment setup, MacOS
-users can install this with the command `brew install tree`. WSL and Linux users
-can run `sudo apt-get install tree` to download it as well.
-
-## Where Do I Start?
-
-Just as with your Phase 3 Project, this will likely be one of the biggest
-projects you've undertaken so far. Your first task should be creating a Git
-repository to keep track of your work and roll back any undesired changes.
-
-### Removing Existing Git Configuration
-
-If you're using this template, start off by removing the existing metadata for
-Github and Canvas. Run the following command to carry this out:
-
-```console
-$ rm -rf .git .canvas
-```
-
-The `rm` command removes files from your computer's memory. The `-r` flag tells
-the console to remove _recursively_, which allows the command to remove
-directories and the files within them. `-f` removes them permanently.
-
-`.git` contains this directory's configuration to track changes and push to
-Github (you want to track and push _your own_ changes instead), and `.canvas`
-contains the metadata to create a Canvas page from your Git repo. You don't have
-the permissions to edit our Canvas course, so it's not worth keeping around.
-
-### Creating Your Own Git Repo
-
-First things first- rename this directory! Once you have an idea for a name,
-move one level up with `cd ..` and run
-`mv python-p4-project-template <new-directory-name>` to change its name (replace
-<new-directory-name> with an appropriate project directory name).
-
-> **Note: If you typed the `mv` command in a terminal within VS Code, you should
-> close VS Code then reopen it.**
-
-> **Note: `mv` actually stands for "move", but your computer interprets this
-> rename as a move from a directory with the old name to a directory with a new
-> name.**
-
-`cd` back into your new directory and run `git init` to create a local git
-repository. Add all of your local files to version control with `git add --all`,
-then commit them with `git commit -m'initial commit'`. (You can change the
-message here- this one is just a common choice.)
-
-Navigate to [GitHub](https://github.com). In the upper-right corner of the page,
-click on the "+" dropdown menu, then select "New repository". Enter the name of
-your local repo, choose whether you would like it to be public or private, make
-sure "Initialize this repository with a README" is unchecked (you already have
-one), then click "Create repository".
-
-Head back to the command line and enter
-`git remote add origin git@github.com:github-username/new-repository-name.git`.
-NOTE: Replace `github-username` with your github username, and
-`new-repository-name` with the name of your new repository. This command will
-map the remote repository to your local repository. Finally, push your first
-commit with `git push -u origin main`.
-
-Your project is now version-controlled locally and online. This will allow you
-to create different versions of your project and pick up your work on a
-different machine if the need arises.
+Anonymous users (i.e. users who are not logged in) may still view all of the beers and reviews in the database, but they must create an account and log in to create their own reviews!
 
 ---
 
-## Setup
-
-### `server/`
-
-The `server/` directory contains all of your backend code.
-
-`app.py` is your Flask application. You'll want to use Flask to build a simple
-API backend like we have in previous modules. You should use Flask-RESTful for
-your routes. You should be familiar with `models.py` and `seed.py` by now, but
-remember that you will need to use Flask-SQLAlchemy, Flask-Migrate, and
-SQLAlchemy-Serializer instead of SQLAlchemy and Alembic in your models.
-
-The project contains a default `Pipfile` with some basic dependencies. You may
-adapt the `Pipfile` if there are additional dependencies you want to add for
-your project.
+## Structure and Stack
 
-To download the dependencies for the backend server, run:
+Brews Reviews is a full-stack application, with a React front end and a Flask back end. Front end files are located in the `client` directory, and utilize the following tools:
+- JavaScript/React
+- React-Router for client-side routing
+- Formik and Yup for forms and form validation
+- CSS modules for styling
 
-```console
-pipenv install
-pipenv shell
-```
+Back end files are located in the `server` directory and utilize the following tools:
+- Flask and Flask-SQLAlchemy
+- flask_restful for RESTful server-side routes
+- flask-bcrypt for password hashing and user authentication
+- python-dotenv for .env (secret key and URI) management
+- flask_cors for managing Cross Origin Resource Sharing
+- flask_migrate for Alembic migrations
+- faker for generating some aspects of seed data
+- SQLite for local development; the live application is deployed using PostgreSQL and Render for hosting
 
-You can run your Flask API on [`localhost:5555`](http://localhost:5555) by
-running:
 
-```console
-python server/app.py
-```
-
-Check that your server serves the default route `http://localhost:5555`. You
-should see a web page with the heading "Project Server".
+## Client
 
-### `client/`
+The following is a brief overview of the components in the `client/src/components` directory and the purposes they serve:
 
-The `client/` directory contains all of your frontend code. The file
-`package.json` has been configured with common React application dependencies,
-include `react-router-dom`. The file also sets the `proxy` field to forward
-requests to `"http://localhost:5555". Feel free to change this to another port-
-just remember to configure your Flask app to use another port as well!
-
-To download the dependencies for the frontend client, run:
-
-```console
-npm install --prefix client
-```
-
-You can run your React app on [`localhost:3000`](http://localhost:3000) by
-running:
-
-```sh
-npm start --prefix client
-```
-
-Check that your the React client displays a default page
-`http://localhost:3000`. You should see a web page with the heading "Project
-Client".
-
-## Generating Your Database
-
-NOTE: The initial project directory structure does not contain the `instance` or
-`migrations` folders. Change into the `server` directory:
-
-```console
-cd server
-```
-
-Then enter the commands to create the `instance` and `migrations` folders and
-the database `app.db` file:
+#### App.js
 
-```
-flask db init
-flask db upgrade head
-```
-
-Type `tree -L 2` within the `server` folder to confirm the new directory
-structure:
-
-```console
-.
-├── app.py
-├── config.py
-├── instance
-│   └── app.db
-├── migrations
-│   ├── README
-│   ├── __pycache__
-│   ├── alembic.ini
-│   ├── env.py
-│   ├── script.py.mako
-│   └── versions
-├── models.py
-└── seed.py
-```
+Serves as the entry point for the entire React application. Returns the `NavBar` component on top of the other component `Route`s nested witin a `Switch` from react-router-dom. This allows the navigation bar to be visible while allowing the for the rest of the page body to display the appropriate component to the user based on their interaction.
 
-Edit `models.py` and start creating your models. Import your models as needed in
-other modules, i.e. `from models import ...`.
+#### AllBeers
 
-Remember to regularly run
-`flask db revision --autogenerate -m'<descriptive message>'`, replacing
-`<descriptive message>` with an appropriate message, and `flask db upgrade head`
-to track your modifications to the database and create checkpoints in case you
-ever need to roll those modifications back.
+Upon loading, a useEffect is used to run a fetch request for the beer data. This data is then mapped onto list items (that are also links to routes for their respective beer ids), and rendered under a heading.
 
-> **Tip: It's always a good idea to start with an empty revision! This allows
-> you to roll all the way back while still holding onto your database. You can
-> create this empty revision with `flask db revision -m'Create DB'`.**
+#### BeerReviews
 
-If you want to seed your database, now would be a great time to write out your
-`seed.py` script and run it to generate some test data. Faker has been included
-in the Pipfile if you'd like to use that library.
+Via a useEffect, this component fetches data from the server about a particular beer, including the logged in user info (if there is a logged in user). Once the data is retrieved, it is saved in state, and filtered between the user's own review data and other users' review data.
 
----
+If there is a logged in user:
 
-#### `config.py`
+It is checked whether that user has a review for that beer. If so, that review is mapped into a `ReviewCard` to be displayed; if not, a form is rendered (with validation handled via Formik and yup) inviting to the user to compose and submit a review for that beer.
 
-When developing a large Python application, you might run into a common issue:
-_circular imports_. A circular import occurs when two modules import from one
-another, such as `app.py` and `models.py`. When you create a circular import and
-attempt to run your app, you'll see the following error:
+If the user is no logged in user:
 
-```console
-ImportError: cannot import name
-```
+A request for the user to login is rendered under the "Your Review" heading.
 
-If you're going to need an object in multiple modules like `app` or `db`,
-creating a _third_ module to instantiate these objects can save you a great deal
-of circular grief. Here's a good start to a Flask config file (you may need more
-if you intend to include features like authentication and passwords):
+In either case:
 
-```py
-# Standard library imports
+All reviews not belonging to a logged in user are mapped to a separate list of `ReviewCard`s, which are then rendered under the "Other Users' Reviews" heading.
 
-# Remote library imports
-from flask import Flask
-from flask_cors import CORS
-from flask_migrate import Migrate
-from flask_restful import Api
-from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy import MetaData
+#### Homepage
 
-# Local imports
+A fetch to the server is completed, and it is determined whether they are logged in or not via the response code. If they are logged in, they are greeted with a welcome image and personalized greeting. If not, they are invited to either sign up or log in. Clicking "log in" redirects the user to the login route; the sign up form is validated by Formik and Yup. The password field is validated using Regex to require both letters and numbers; a custom error message is rendered if this requirement is not met. If someone attempts to sign up with a username that already exists in the database (thus returning a 409 code), the `userExistsError` state is set to true, and this is used to inform the user that they must choose a different username.
 
-# Instantiate app, set attributes
-app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///app.db'
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.json.compact = False
+#### Login
 
-# Define metadata, instantiate db
-metadata = MetaData(naming_convention={
-    "fk": "fk_%(table_name)s_%(column_0_name)s_%(referred_table_name)s",
-})
-db = SQLAlchemy(metadata=metadata)
-migrate = Migrate(app, db)
-db.init_app(app)
+The Login route sends a request to the back end to check if the user is already logged in. If they are, they are redirected to the home route. If they are not, a formik/Yup validated form is rendered, which POSTs to the back end on submission. If this POST requests returns any code other than 200 (i.e. success), the the `badLogin` state is set to true, rendering an error message and asking the user to try again. Otherwise, the `loggedIn` state is set to true, triggering the redirect to the home route.
 
-# Instantiate REST API
-api = Api(app)
+#### Logout
 
-# Instantiate CORS
-CORS(app)
+Perhaps the simplest front end route/component in the application, the logout route simply sends a DELETE request to the server to delete the current user session. A confirmation message is displayed to the user.
 
-```
+#### MyAccount
 
-Now let's review that last line...
+A request is sent to the server to determine whether the user is logged in. If they are, the `isLoggedIn` state is set to true. The current user (if there is one) is applied to `setCurrentUser`. While the `isLoggedIn` state is true, a menu of options (with appropriate Links) for the user is displayed, otherwise, a prompt to log in is displayed.
 
-#### CORS
+#### MyBeers
 
-CORS (Cross-Origin Resource Sharing) is a system that uses HTTP headers to
-determine whether resources from different servers-of-origin can be accessed. If
-you're using the fetch API to connect your frontend to your Flask backend, you
-need to configure CORS on your Flask application instance. Lucky for us, that
-only takes one line:
+This route sends a request to the `my-beers` route from the API. If the request is successful (i.e. a user is logged in), the `requestInfo` state is updated to include this information and the user's beers. The beers are then mapped into li/Link objects and displayed to the user. If the user is not logged in, the `loggedIn` portion of the state object remains false, and the user is prompted to log in. If the user is logged in but has no beer reviews yet, a message is rendered inviting them to complete their first brew review.
 
-```py
-CORS(app)
 
-```
+#### NavBar
 
-By default, Flask-CORS enables CORS on all routes in your application with all
-fetching servers. You can also specify the resources that allow CORS. The
-following specifies that routes beginning with `api/` allow CORS from any
-originating server:
+Self-explanatory; this component is always rendered at the top of the page, with NavLinks to direct the user to various parts of the application.
 
-```py
-CORS(app, resources={r"/api/*": {"origins": "*"}})
+#### NewBeer
 
-```
+The `/new` route on the API is first hit to check if the user is logged in. If they are not logged in, a message prompting them to do is rendered. Otherwise, a form is rendered, prompting for information about the new beer and the user's review of it. Formik and yup are used to ensure that the fields are completed with appropriate type and (in some cases) length of information, with appropriate error messages in case of failure. Upon submission of the form info (via a POST to the same `/new` route), the returned status determines whether there was the error of the beer already existing in the database, in which case the `setBeerExistsError` state is updated and the appropriate message is displayed to the user. If the submission is successful, `setSuccessfulSubmission` is updated, which triggers a render of the confirmation message.
 
-You can also set this up resource-by-resource by importing and using the
-`@cross_origin` decorator:
+#### ReviewCard
 
-```py
-@app.route("/")
-@cross_origin()
-def howdy():
-  return "Howdy partner!"
+ReviewCard receives its parameters (destructured) from the BeerReviews component. Each card displays the information about the beer and review. If `canEdit` is received as `true` (meaning the review belongs to the logged in user), then edit and delete buttons are also rendered to the card. If the edit button is clicked, the `isEditing` state is set to `true`, which allows for the edit form to be rendered. This form, again validated using Formik and yup, is pre-populated with the information that already exists for the review. Submission of this edit form sends a PATCH request to the API, and then `history.go(0)` from react-router-dom is used to re-render the page, reflecting the changes. The delete button, as expected, sends a DELETE request intead of a PATCH request to the API, and then again re-renders the page.
 
-```
+## Server
 
----
+The following is a brief survey of some of the important back end files for Brews Reviews, which reside in the `/server` directory of the project.
 
-## Updating Your README.md
+#### config.py
 
-`README.md` is a Markdown file that describes your project. These files can be
-used in many different ways- you may have noticed that we use them to generate
-entire Canvas lessons- but they're most commonly used as homepages for online
-Git repositories. **When you develop something that you want other people to
-use, you need to have a README.**
+Config is where much of the "setup" for the Flask application resides. flask itself, along with numerous flask-related libraries, are imported and instantiated here.
+* Dotenv and os are used import to the `SECRET_KEY` and `DATABASE_URI` from the .env file, allowing this sensitive data to remain separate and not risk exposure through being uploaded to GitHub.
+* `app` is instantiated as flask application
+* a `bcrypt` instance is created with `app` passed into it
+* the app's `secret_key` is set via the aforementioned dotenv process
+* configuration options are set. Most notably, the `SQLALCHEMY_DATABASE_URI` is set. You'll see two options, with one commented out: This is so a sqlite db can be used for local development and testing, with the deployed database URI becoming commented in for the live application.
+* metadata is defined, with a naming convention set (see https://medium.com/@scottschwab86/no-anonymous-constraints-a-bit-about-the-sqlalchemy-naming-convention-ef2681e3fda0 for some thoughts on naming_convention!)
+* This metadata is passed into `db`, a instantiated SQLAlchemy object
+* `Migrate` and and `init_app` tie together the SQLAlchemy database and the Flask application.
+* `flask_restful` is used to instantiate an API object
+* CORS (Cross-Origin-Resource-Sharing) is set up to allow the server to accept requests from the front end
 
-Markdown is not a language that we cover in Flatiron's Software Engineering
-curriculum, but it's not a particularly difficult language to learn (if you've
-ever left a comment on Reddit, you might already know the basics). Refer to the
-cheat sheet in this lesson's resources for a basic guide to Markdown.
 
-### What Goes into a README?
+#### app.py
 
-This README should serve as a template for your own- go through the important
-files in your project and describe what they do. Each file that you edit (you
-can ignore your migration files) should get at least a paragraph. Each function
-should get a small blurb.
+The app file is where the routes for the Flask application are set up.
 
-You should descibe your application first, and with a good level of detail. The
-rest should be ordered by importance to the user. (Probably routes next, then
-models.)
+* Routes are passed into `render_template`, enabling routes to be accessed directly (i.e. without user navigation). Without this, the deployed application would crash if a user were to "refresh" a page that accesses some of these routes.
+* `before_request` calls upon a function that checks whether a user is logged in. If the an endpoint is accessed and there is no active user session, the API will return an error object before attempting to complete any of the actions intended to be available only to authenticated users.
+* Home responds to a GET request an object containing active user session
+* Signup expects a POST request; it parses the username and password from the request, creates a new user object, and commits the new user object to the database. A check is in place to ensure that such a username doesn't already exist in the database first, if it does, an error is returned without committing the new object to the db.
+* Login sends the active user session back to the client on a GET request (this is used on the front end to determine whether the user needs to login or be redirected). The username and password data is parsed, the user object is retrieved from the db, and then the password is passed to thta model's `authenticate_user` method. If authentication is successful, the session is set with the user's credentials, and the user's information is returned as a response. If authentication fails, an error object is returned.
+* The Logout route accepts a DELETE request, which simply removes the current user info (if any) from the current session.
+* The GET method for AllBeers queries the database for all the beers, serializes them to Python dictionaries, and returns them as a response.
+* The MyBeers route first identifies the current user id from the session, then queries the Reviews table and filters the results based on those which match the current user's id. These reviews are then serialized and returned as a response.
+* NewBeer responds to a GET request with the logged in user's ID. The POST method parses out the form data and saves them to Python variables. The Beer table is queried with the brewery and beer name information; if this results in an object, then that means the beer already exists in the database, and therefore an error object with a message stating this issue is returned. Otherwise, the form data is used to create a new Beer object, which is then added to the session and committed to the database
+* The AlterReview class contains POST, DELETE, and PATCH methods. The POST method, as expected, creates a new Review object from the request data, and also adds to the new object the current user id from the session before committing the new review to the db. The DELETE method retrieves the current user id as well as the intended review id. This data is used to retrieve the review from the db, which is then deleted. Similar to the POST method, the PATCH method parses the data from the request, but then retrieves the appropriate review from the db. The retrieved review object is then altered and committed to the db.
+* SingleBeerReviews is referenced by the endpoint `/api/beers/<int:id>`. The GET method retrieves the current user id as well as queries the specified beer (by the id) from the db. This info is combined into a response object which is then returned.
+* MyAccount responds to a GET request with a response object containing the current user's information.
+* Each route, which inherits from flask_restful's `Resource` and is built with that specification in mind, is then passed `add_resource` method of the api object (the flask_restful object from config) with established endpoints. Each endpoint is prefixed with "/api/" in order to alleviate any routing conflicts that may accidentally arise with the front end.
 
-Screenshots and links to resources that you used throughout are also useful to
-users and collaborators, but a little more syntactically complicated. Only add
-these in if you're feeling comfortable with Markdown.
+#### models.py
 
----
+There are three main models for Brews Reviews: User, Beer, and Review. The relationships between these models (and database tables) is roughly as follows:
 
-## Conclusion
+* A user can have many reviews; a review can only belong to one user
+* A beer can have many reviews, a review can only belong to one beer
+* A user can have many beers (via reviews)
+* A beer can have many users (via reviews)
 
-A lot of work goes into a full-stack application, but it all relies on concepts
-that you've practiced thoroughly throughout this phase. Hopefully this template
-and guide will get you off to a good start with your Phase 4 Project.
+Examining each model in some more detail:
 
-Happy coding!
 
----
+##### User
+The User model has three columns: id, username, and _password_hash. Constraints are in place for types (integer, string), as well as primary_key constraint for id, and nullable and unique constraints for the username. The _password_hash is s created by bcrypt's `generate_password_hash` and is authenticated by its `check_password_hash` method. `password` is set as a hybrid property so that it can retain both SQLAlchemy and Python functionality. This property's getter returns the _password_hash column; its setter is used to call upon the aforementioned creation and authentication methods from bcrypt. A relationship is established with the Review table, and a cascade option for delete-orphan is set (if a user is deleted, so should its reviews).
 
-## Resources
+##### Beer
+The Beer table establishes columns for id, name, beer_type, and brewery. All columns are strings except for the id, which is an integer and also the primary_key. Like User, a relationship is established with the Review model.
 
-- [Setting up a respository - Atlassian](https://www.atlassian.com/git/tutorials/setting-up-a-repository)
-- [Create a repo- GitHub Docs](https://docs.github.com/en/get-started/quickstart/create-a-repo)
-- [Markdown Cheat Sheet](https://www.markdownguide.org/cheat-sheet/)
-- [Python Circular Imports - StackAbuse](https://stackabuse.com/python-circular-imports/)
-- [Flask-CORS](https://flask-cors.readthedocs.io/en/latest/)
+##### Review
+The Review table, which facilitates the many-to-many relationships as described above, containts two foreign key columns, pertaining to the User's id column and the Beer's id column. The relationship is explictly establishe between the two other models as well via db.relationship. In addition to the foreign key columns, the Review table also contains its own id (primary key), as well as a string column for the review body and an integer column for the review rating.
+
+
+#### seed.py
+A seed file is included for development and testing purposes. Faker is used to generate random usernames, then passwords and beer reviews are manually created. After deleting any pre-existing data from the database, these newly created objects are added to collections which are then committed to the db.
+
+## Ideas For Future Development
+
+Like any application, Brews Reviews still has potential for growth, change, and further development in the future. Some ideas include, but are not limited to:
+* Ability to view another user's reviews by clicking on their names
+* Ability to comment on another user's reviews
+* Improve styling of certian components. Particularly, adding "loading" modals that display while waiting for some data to be retrieved from the back end
+* Incorporating a list of well-known breweries when adding a new beer, rather than relying on the user to always manually type a brewery name. Same for beer types.
+* Adding more in-depth validation to edit forms
+* Allow a user to "favorite" certain beers
+* Many more!
+
+Please submit any ideas for further development to Scott Schwab, scottschwab86@gmail.com
+
+Developed by Scott Schwab, 2023

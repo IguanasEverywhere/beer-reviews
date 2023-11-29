@@ -25,8 +25,7 @@ function MyBeers() {
       })
   }, [])
 
-  console.log(requestInfo)
-  // will update this with better info later
+
   let myBeers = requestInfo.beers.map((beer) => <li key={beer.id}><Link to={`/beers/${beer.beer.id}`}>{beer.beer.name}</Link> | {beer.beer.beer_type} | {beer.beer.brewery} | {beer.rating} | {beer.body}</li>)
 
   if (myBeers.length === 0) {

@@ -11,8 +11,6 @@ function NavBar() {
       <NavLink exact to='/' className={styles.navlinks}>Home</NavLink>
       <NavLink to='/beers' className={styles.navlinks}>Browse Brew Reviews</NavLink>
       <NavLink to='/my-account' className={styles.navlinks}>My Account</NavLink>
-      {/* <NavLink to='/new' className={styles.navlinks}>New Beer</NavLink>
-      <NavLink to='/my-beers' className={styles.navlinks}>My Beers</NavLink> */}
     </div>
   )
 }

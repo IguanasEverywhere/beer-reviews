@@ -25,7 +25,6 @@ function NewBeer() {
   }, [])
 
 
-  //come back to add maxvalue
   const newReviewFormSchema = yup.object().shape({
     beerName: yup.string().required("Please enter a beer name"),
     beerType: yup.string().required("Please enter a type of beer"),
@@ -63,7 +62,6 @@ function NewBeer() {
     }
   })
 
-  // do some better styling for the error msg later
 
   return (
     <>
