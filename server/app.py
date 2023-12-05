@@ -221,6 +221,7 @@ class MyAccount(Resource):
         return response
 
 
+
 api.add_resource(AllBeers, '/api/beers', endpoint='/api/beers')
 api.add_resource(SingleBeerReviews, '/api/beers/<int:id>', endpoint='/api/beers/<int:id>')
 api.add_resource(SignUp, '/api/signup', endpoint='/api/signup')
@@ -231,6 +232,9 @@ api.add_resource(NewBeer, '/api/new', endpoint='/api/new')
 api.add_resource(Home, '/api/home', endpoint='/api/home')
 api.add_resource(MyAccount, '/api/my-account', endpoint='/api/my-account')
 api.add_resource(AlterReview, '/api/alter-review', endpoint='/api/alter-review')
+
+
+
 
 if __name__ == '__main__':
     app.run(port=5555, debug=True)

@@ -57,6 +57,7 @@ function NewBeer() {
             setBeerExistsError(true)
           } else if (r.status === 200) {
             setSuccessfulSubmission(true)
+            setBeerExistsError(false)
           }
         })
     }
