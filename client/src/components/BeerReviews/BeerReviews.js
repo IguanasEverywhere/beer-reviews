@@ -27,7 +27,7 @@ function BeerReviews() {
   });
 
   const formSchema = yup.object().shape({
-    reviewBody: yup.string().required("Please enter a review!"),
+    reviewBody: yup.string().required("Please enter a review!").min(10),
     rating: yup.number().required().positive().integer()
   })
 
@@ -56,7 +56,8 @@ function BeerReviews() {
       .then(beerData => {
         setBeerReviews(
           { reviews: beerData.beer.reviews, currentUserId: beerData.user, retrieved: true, name: beerData.beer.brewery + ' - ' + beerData.beer.name }
-        )}
+        )
+      }
       )
   }, [params.id])
 
@@ -98,7 +99,7 @@ function BeerReviews() {
             </select>
 
             <button type="submit">Submit Review!</button>
-
+            <small className={styles.errorMsg}>{formik.errors.reviewBody}</small>
           </form>
         </div>
 

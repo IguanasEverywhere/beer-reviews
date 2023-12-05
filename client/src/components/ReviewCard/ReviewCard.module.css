@@ -27,3 +27,8 @@
   display: block;
   margin-top: 2%;
 }
+
+.errorMsg {
+  size: 0.5rem;
+  color: red;
+}

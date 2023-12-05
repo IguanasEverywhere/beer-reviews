@@ -13,7 +13,7 @@ function ReviewCard({ body, username, rating, canEdit, reviewId }) {
   let history = useHistory();
 
   const formSchema = yup.object().shape({
-    reviewBody: yup.string().required("Please enter a review!"),
+    reviewBody: yup.string().required("Please enter a review!").min(10),
     rating: yup.number().required().positive().integer()
   })
 
@@ -53,7 +53,7 @@ function ReviewCard({ body, username, rating, canEdit, reviewId }) {
     }).then(r => console.log(r)).then(
       //refresh current reviews page
       history.go(0)
-      )
+    )
   }
 
   function handleEdit() {
@@ -89,8 +89,9 @@ function ReviewCard({ body, username, rating, canEdit, reviewId }) {
           <option value="5">5 Stars -- Delicious!</option>
         </select>
 
-        <button type="submit">Edit Review!</button>
 
+        <button type="submit">Edit Review!</button>
+        <small className={styles.errorMsg}>{formik.errors.reviewBody}</small>
       </form> </div> : null}
     </div>
   )
