@@ -31,6 +31,7 @@ app.secret_key=os.environ.get('SECRET_KEY')
 #app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///app.db'
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URI')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+# This displays JSON on separate lines when using flask run
 app.json.compact = False
 
 # Define metadata, instantiate db
