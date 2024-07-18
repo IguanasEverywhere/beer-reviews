@@ -2,6 +2,8 @@
 
 ## How to Use
 
+DEMO VIDEO: https://www.youtube.com/watch?v=u-Hq1J7Ilo0
+
 On the Brews Reviews website, a user can register for an account via unique username and password that they create. Once registered, a user can login and then:
 
 - View beers in the database
